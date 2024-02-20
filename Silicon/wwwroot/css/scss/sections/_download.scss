@@ -1,0 +1,60 @@
+#download-our-app{
+    background-color: $gray-100;
+    padding: 1rem 0;
+
+    .container{
+        background-color: $gray-200;
+        padding: 6rem 0;
+        display: flex;
+        flex-direction: column;
+        gap: 15rem;
+        @include xl {
+            flex-direction: row;
+        }
+        .screen-image{
+            width: auto;
+            height: 50%;
+        }
+        h1 {
+            text-align: center;
+            @include xl {
+                text-align: start;
+            }
+        }
+        a {
+            color: $gray-700;
+            .app-box {
+                display: flex;
+                gap: 5rem;
+                padding-bottom: 2rem;
+                justify-content: center;
+                @include xl {
+                    justify-content: start;
+                }
+                .app-name{
+                    color: $gray-600;
+                    margin-top: 2rem;
+                    margin-bottom: -0.5rem;
+                }
+                
+                i{
+                    color: $warning;
+                    font-size: 10px;
+                    margin-right: 3px;
+    
+                }
+                img {
+                    padding-top: 6rem;
+
+                }
+            }
+            &:hover {
+                img {
+                    opacity: 0.8;
+                }
+
+            }
+        }
+
+    }
+}

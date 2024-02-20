@@ -1,0 +1,86 @@
+#newsletter{
+    background-color: $gray-100;
+    padding: 6rem 0;
+    .container{
+        display: flex;
+        flex-direction: column;
+
+        @include xxl {
+            max-width: 960px;
+        }
+
+
+        .title-box{
+            display: flex;
+            gap: 3rem;
+            padding-bottom: 3rem;
+            text-align: center;
+            @include md{
+                text-align: start;
+            }
+            img{
+                display: none;
+                @include md{
+                    display:block;
+                }
+            }
+        }
+        .sign-up{
+            display: block;
+            text-align: center;
+            @include md {
+                display: flex;
+                text-align: start;
+            }
+            padding-bottom: 3rem;
+            .content{
+                display: grid;
+                grid-template-columns: auto ;
+                @include md{
+                    grid-template-columns: auto auto;
+                    grid-template-rows: auto auto auto;
+                }
+
+                @include lg{
+                    grid-template-columns: auto auto auto;
+                    grid-template-rows: auto auto;
+                }
+
+                .content-box{
+                    margin: 0 3rem;
+                }
+            }
+        }
+        .signup-box{
+            display: grid;
+            grid-template-rows: 1fr 1fr;
+            @include md{
+                grid-template-columns: 1fr auto;
+                gap: 1rem;
+            }
+
+
+            .mail-input{
+                display: flex;
+                border: 1px $gray-400;
+                background-color: white;
+                border-radius: 1rem;
+                padding: 1rem;
+                
+                input{
+                    margin-left: 0.5rem;
+                    width: 100%;
+                    border: none;
+                }
+                i {
+                    padding-top:0.3rem;
+                    font-size: 18px;
+                    color: $gray-600
+                }
+            }
+            a{
+                padding: 0 3rem;
+            }
+        }
+    }
+}

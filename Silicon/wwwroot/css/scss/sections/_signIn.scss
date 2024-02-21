@@ -23,12 +23,21 @@
             label {
                 color: $gray-900;
             }
+            .form-box{
+                position: relative;
+                span{
+                    color: $danger;
+                    position: absolute;
+                    right: 0;
+                }
+            }
         }
 
         .form-button{
             text-align: center;
 
-            .btn-theme {
+            .btn-theme-s {
+                width: 100%;
                 padding: 1rem 1rem;
                 margin: 1rem 0;
             }

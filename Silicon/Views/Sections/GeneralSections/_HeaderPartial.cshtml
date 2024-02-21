@@ -3,8 +3,8 @@
         <a id="logo" href="index.html"><img src="/images/solid.svg" alt=""></a>
         <div id="menu">
             <nav>
-                <a class="menu-link" href="#showcase">Overview</a>
-                <a class="menu-link" href="#features">Features</a>
+                <a class="menu-link" asp-controller="Home" asp-action="Index" asp-fragment="showcase">Overview</a>
+                <a class="menu-link" asp-controller="Home" asp-action="Index" asp-fragment="features">Features</a>
                 <a class="menu-link" href="contact.html">Contact</a>
             </nav>
         </div>
@@ -20,7 +20,7 @@
 
         <div class="account-buttons">
             <a class="btn-gray" href="#"><i class="fa-regular fa-right-to-bracket"></i><span>Sign In</span></a>
-            <a class="btn-theme" href="#"><i class="fa-regular fa-user"></i><span>Sign up</span></a>
+            <a class="btn-theme" asp-controller="Auth" asp-action="Signup"><i class="fa-regular fa-user"></i><span>Sign up</span></a>
         </div>
     </div>
 </header>

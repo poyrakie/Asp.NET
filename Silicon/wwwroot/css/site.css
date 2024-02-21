@@ -973,14 +973,26 @@ footer .container .social-media {
 #sign-in .container form label {
   color: #0B0F19;
 }
+#sign-in .container form .form-box {
+  position: relative;
+}
+#sign-in .container form .form-box span {
+  color: #EF4444;
+  position: absolute;
+  right: 0;
+}
 #sign-in .container .form-button {
   text-align: center;
 }
-#sign-in .container .form-button .btn-theme {
+#sign-in .container .form-button .btn-theme-s {
+  width: 100%;
   padding: 1rem 1rem;
   margin: 1rem 0;
 }
 
+#create-account span {
+  color: #EF4444;
+}
 #create-account .container {
   max-width: 40rem;
   margin: 10rem auto;
@@ -991,8 +1003,19 @@ footer .container .social-media {
 #create-account .container .create-form-name {
   display: grid;
   margin-bottom: 2rem;
-  grid-template-columns: 1fr 1fr;
   gap: 1.5rem;
+}
+@media (min-width: 992px) {
+  #create-account .container .create-form-name {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+#create-account .container .create-form-name .create-form-name-box {
+  position: relative;
+}
+#create-account .container .create-form-name .create-form-name-box span {
+  position: absolute;
+  right: 0;
 }
 #create-account .container .input-box {
   display: block;
@@ -1003,10 +1026,16 @@ footer .container .social-media {
 }
 #create-account .container .create-form-box {
   margin-bottom: 2rem;
+  position: relative;
+}
+#create-account .container .create-form-box span {
+  position: absolute;
+  right: 0;
 }
 #create-account .container .input-checkbox {
   margin-left: 1rem;
 }
 #create-account .container .btn-theme-s {
+  width: 100%;
   margin-top: 2rem;
 }

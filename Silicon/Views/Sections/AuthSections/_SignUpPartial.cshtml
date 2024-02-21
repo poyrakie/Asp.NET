@@ -1,0 +1,41 @@
+﻿@model SignUpViewModel
+<section id="create-account">
+    <div class="container">
+        <h1>Create Account</h1>
+        <p>Already have an account? <a asp-controller="Auth" asp-action="SignIn">Sign in here</a></p>
+        <form method="post" asp-controller="Auth" asp-action="SignUp" novalidate>
+            <div class="create-form-name">
+                <div class="create-form-name-box">
+                    <label asp-for="Form.FirstName"></label>
+                    <span asp-validation-for="Form.FirstName"></span>
+                    <input class="input-box" asp-for="Form.FirstName">
+                </div>
+                <div class="create-form-name-box">
+                    <label asp-for="Form.LastName"></label>
+                    <span asp-validation-for="Form.LastName"></span>
+                    <input class="input-box" asp-for="Form.LastName">
+                </div>
+            </div>
+            <div class="create-form-box">
+                <label asp-for="Form.Email"></label>
+                <span asp-validation-for="Form.Email"></span>
+                <input class="input-box" asp-for="Form.Email">
+            </div>
+            <div class="create-form-box">
+                <label asp-for="Form.Password"></label>
+                <span asp-validation-for="Form.Password"></span>
+                <input class="input-box" asp-for="Form.Password">
+                <p>@Model.ErrorMessage</p>
+            </div>
+            <div class="create-form-box">
+                <label asp-for="Form.ConfirmPassword"></label>
+                <span asp-validation-for="Form.ConfirmPassword"></span>
+                <input class="input-box" asp-for="Form.ConfirmPassword">
+            </div>
+            <input asp-for="Form.TermsAndConditions">
+            <label class="input-checkbox" asp-for="Form.TermsAndConditions">I agree to the <a asp-controller="About" asp-action="Terms">Terms</a> & <a asp-controller="About" asp-action="Conditions">Conditions</a>.</label>
+            <span class="d-block" asp-validation-for="Form.TermsAndConditions"></span>
+            <button class="btn-theme-s" type="submit">@Model.Title</button>
+        </form>
+    </div>
+</section>

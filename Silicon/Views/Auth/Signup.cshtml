@@ -1,1 +1,7 @@
-﻿<partial name="~/Views/Shared/Sections/AuthSections/_SignupPartial.cshtml" />
+﻿@model SignUpViewModel
+
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<partial name="~/Views/Sections/AuthSections/_SignupPartial.cshtml" />

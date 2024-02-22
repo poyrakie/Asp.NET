@@ -45,7 +45,7 @@ public class AuthController : Controller
 
         //var result = _authService.SignIn(model.Form);
         //if (result)
-        //{ return RedirectToAction("Index", "Account"); }
+        //{ return RedirectToAction("Details", "Account"); }
 
         model.ErrorMessage = "Incorrect email or password";
         return View(model);

@@ -1,6 +1,6 @@
-﻿using Silicon.Models;
+﻿using Infrastructure.Models.AccountModels;
 
-namespace Silicon.ViewModels;
+namespace Silicon.ViewModels.AccountViewModels;
 
 public class AccountDetailsViewModel
 {

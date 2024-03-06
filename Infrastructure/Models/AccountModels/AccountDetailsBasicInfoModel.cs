@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Silicon.Models;
+namespace Infrastructure.Models.AccountModels;
 
 public class AccountDetailsBasicInfoModel
 {

@@ -9,5 +9,7 @@ public class UserEntity : IdentityUser
     [ProtectedPersonalData]
     public string LastName { get; set; } = null!;
     public int? AddressId { get; set; }
+    public string? Biography { get; set; }
+    public string? ImgUrl { get; set; }
     public AddressEntity? Address { get; set; }
 }

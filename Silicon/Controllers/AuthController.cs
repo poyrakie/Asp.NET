@@ -1,53 +1,71 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Infrastructure.Entities;
+using Infrastructure.Services;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Silicon.ViewModels.AuthViewModels;
 
 namespace Silicon.Controllers;
 
-public class AuthController : Controller
+public class AuthController(UserService userService, SignInManager<UserEntity> signInManager) : Controller
 {
+    private readonly UserService _userService = userService;
+    private readonly SignInManager<UserEntity> _signInManager = signInManager;
+
+    #region Signup
     [Route("/signup")]
     [HttpGet]
     public IActionResult SignUp()
     {
+        if (_signInManager.IsSignedIn(User))
+            return RedirectToAction("Details", "Account");
         var viewModel = new SignUpViewModel();
         return View(viewModel);
     }
 
     [Route("/signup")]
     [HttpPost]
-    public IActionResult SignUp(SignUpViewModel model)
+    public async Task<IActionResult> SignUp(SignUpViewModel model)
     {
-        if (!ModelState.IsValid)
+        if (ModelState.IsValid)
         {
-            model.ErrorMessage = "Password must be one uppercase, one lowercase, one number, and one special character.And a minimum of 8 characters";
+            var result = await _userService.RegisterUserAsync(model.Form);
+            if (result.StatusCode == Infrastructure.Models.StatusCode.OK)
+                return RedirectToAction("SignIn", "Auth");
+
+            model.ErrorMessage = result.Message;
             return View(model);
         }
-        return RedirectToAction("SignIn", "Auth");
-    }
 
+        model.ErrorMessage = "Password must be one uppercase, one lowercase, one number, and one special character.And a minimum of 8 characters";
+        return View(model);
+    }
+    #endregion
+
+    #region Signin
     [Route("/signin")]
     [HttpGet]
     public IActionResult SignIn()
     {
+        if (_signInManager.IsSignedIn(User))
+            return RedirectToAction("Details", "Account");
         var viewModel = new SignInViewModel();
         return View(viewModel);
     }
 
     [Route("/signin")]
     [HttpPost]
-    public IActionResult SignIn(SignInViewModel model)
+    public async Task<IActionResult> SignIn(SignInViewModel model)
     {
-        if (!ModelState.IsValid)
+        if (ModelState.IsValid)
         {
-
+            var result = await _userService.SignInUserAsync(model.Form);
+            if (result.StatusCode == Infrastructure.Models.StatusCode.OK)
+                return RedirectToAction("Details", "Account");
+            model.ErrorMessage = result.Message;
             return View(model);
         }
-
-        //var result = _authService.SignIn(model.Form);
-        //if (result)
-        //{ return RedirectToAction("Details", "Account"); }
-
-        model.ErrorMessage = "Incorrect email or password";
+        model.ErrorMessage = "You must enter email and password";
         return View(model);
     }
+    #endregion
 }

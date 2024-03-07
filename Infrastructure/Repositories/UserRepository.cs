@@ -1,7 +1,6 @@
 ﻿using Infrastructure.Contexts;
 using Infrastructure.Entities;
 using Infrastructure.Factories;
-using Infrastructure.Migrations;
 using Infrastructure.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
@@ -21,7 +20,7 @@ public  class UserRepository(DataContext context) : BaseRepo<UserEntity>(context
                 .ToListAsync();
 
             if (!list.Any())
-                return ResponseFactory.NotFound("List is empty u fuck");
+                return ResponseFactory.NotFound("List is empty");
             return ResponseFactory.Ok(list);
         }
         catch (Exception ex)

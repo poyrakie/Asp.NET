@@ -1,6 +1,7 @@
 ﻿using Infrastructure.Entities;
 using Infrastructure.Factories;
 using Infrastructure.Models;
+using Infrastructure.Models.AccountModels;
 using Infrastructure.Models.AuthModels;
 using Infrastructure.Repositories;
 using Microsoft.AspNetCore.Identity;
@@ -14,17 +15,17 @@ public class UserService(UserRepository repo, UserManager<UserEntity> userManage
     private readonly UserManager<UserEntity> _userManager = userManager;
     private readonly SignInManager<UserEntity> _signInManager = signInManager;
 
-    public async Task<ResponseResult> RegisterUserAsync(SignUpFormModel model)
+    public async Task<ResponseResult> RegisterUserAsync(SignUpFormModel form)
     {
         try
         {
-            var result = await CheckIfUserExistsAsync(model.Email);
+            var result = await CheckIfUserExistsAsync(form.Email);
             if (result.StatusCode == StatusCode.NOT_FOUND)
             {
-                var factoryResult = _userFactory.PopulateUserEntity(model);
+                var factoryResult = _userFactory.PopulateUserEntity(form);
                 if (factoryResult.StatusCode == StatusCode.OK)
                 {
-                    var userManagerResult = await _userManager.CreateAsync((UserEntity)factoryResult.ContentResult!, model.Password);
+                    var userManagerResult = await _userManager.CreateAsync((UserEntity)factoryResult.ContentResult!, form.Password);
                     if (userManagerResult.Succeeded)
                         return ResponseFactory.Ok("User registered successfully");
                 }

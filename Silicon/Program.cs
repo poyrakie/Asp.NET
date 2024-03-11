@@ -30,6 +30,10 @@ builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<UserFactory>();
 builder.Services.AddScoped<ResponseResult>();
 builder.Services.AddScoped<AccountFactory>();
+builder.Services.AddScoped<AddressFactory>();
+builder.Services.AddScoped<AddressRepository>();
+builder.Services.AddScoped<AddressService>();
+builder.Services.AddScoped<AccountService>();
 
 var app = builder.Build();
 app.UseHsts();

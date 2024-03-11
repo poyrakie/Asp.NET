@@ -5,7 +5,7 @@ namespace Infrastructure.Models.AccountModels;
 public class AccountDetailsBasicInfoModel
 {
     [DataType(DataType.ImageUrl)]
-    public string? ProfileImage { get; set; }
+    public string? ProfileImage { get; set; } = "hejsan";
 
     [Display(Name = "First name", Prompt = "Enter your first name", Order = 0)]
     [Required(ErrorMessage = "First name is required")]

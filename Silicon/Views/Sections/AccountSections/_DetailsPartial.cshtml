@@ -19,10 +19,10 @@
 
         <div class="details">
             <section class="basic-info">
-                <form method="post" asp-controller="Account" asp-action="Details">
+                <form method="post" asp-controller="Account" asp-action="SaveBasicInfo">
                     <h2>@Model.Title</h2>
                     <h5>Basic Info</h5>
-
+                    <p>@Model.BasicDisplayMessage</p>
                     <div class="content">
                         <div id="form-firstname" class="input-group">
                             <label asp-for="BasicInfo.FirstName"></label>
@@ -62,9 +62,9 @@
             </section>
             <hr />
             <section class="address-info">
-                <form method="post" asp-controller="Account" asp-action="Details">
+                <form method="post" asp-controller="Account" asp-action="SaveAddressInfo">
                     <h5>Address</h5>
-
+                    <p>@Model.AddressDisplayMessage</p>
                     <div class="content">
                         <div id="form-addressline-1" class="input-group">
                             <label asp-for="AddressInfo.Addressline_1"></label>
@@ -99,3 +99,4 @@
         </div>
     </section>
 </div>
+<partial name="~/Views/Sections/GeneralSections/_ValidationScriptPartial.cshtml" />

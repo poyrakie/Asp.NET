@@ -7,4 +7,6 @@ public class AccountDetailsViewModel
     public string Title { get; set; } = "Account Details";
     public AccountDetailsBasicInfoModel BasicInfo { get; set; } = new AccountDetailsBasicInfoModel();
     public AccountDetailsAddressInfoModel AddressInfo { get; set; } = new AccountDetailsAddressInfoModel();
+    public string? BasicDisplayMessage { get; set; }
+    public string? AddressDisplayMessage { get; set; }
 }

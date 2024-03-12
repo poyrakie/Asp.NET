@@ -1,22 +1,20 @@
 ﻿using Infrastructure.Entities;
 using Infrastructure.Factories;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Silicon.ViewModels.AccountViewModels;
-using Infrastructure.Services;
 using Infrastructure.Models.AccountModels;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Silicon.Controllers;
 
 [Authorize]
-public class AccountController(SignInManager<UserEntity> signInManager, UserManager<UserEntity> userManager, AccountFactory accountFactory, AddressService addressService, UserFactory userFactory) : Controller
+public class AccountController(SignInManager<UserEntity> signInManager, UserManager<UserEntity> userManager, AccountFactory accountFactory, UserFactory userFactory) : Controller
 {
     private readonly SignInManager<UserEntity> _signInManager = signInManager;
     private readonly UserManager<UserEntity> _userManager = userManager;
     private readonly AccountFactory _accountFactory = accountFactory;
-    private readonly AddressService _addressService = addressService;
     private readonly UserFactory _userFactory = userFactory;
 
 
@@ -30,57 +28,56 @@ public class AccountController(SignInManager<UserEntity> signInManager, UserMana
         if (userEntity != null)
         {
             viewModel.BasicInfo = _accountFactory.PopulateBasicInfo(userEntity!);
-            viewModel.AddressInfo = _accountFactory.PopulateAddressInfo(userEntity!);
+            viewModel.AddressInfo = await _accountFactory.PopulateAddressInfoAsync(userEntity!);
+        }
+        if (TempData.ContainsKey("BasicDisplayMessage"))
+        {
+            viewModel.BasicDisplayMessage = TempData["BasicDisplayMessage"]!.ToString();
+        }
+        if (TempData.ContainsKey("AddressDisplayMessage"))
+        {
+            viewModel.AddressDisplayMessage = TempData["AddressDisplayMessage"]!.ToString();
         }
 
         return View(viewModel);
     }
 
-    [Route("/account")]
     [HttpPost]
-    public async Task<IActionResult> Details(AccountDetailsViewModel viewModel)
+    [Route("/account/update-basic-info")]
+    public async Task<IActionResult> SaveBasicInfo([Bind(Prefix = "BasicInfo")] AccountDetailsBasicInfoModel basicForm)
     {
         var userEntity = await _userManager.GetUserAsync(User);
-        if (ValidateBasicInfo(viewModel.BasicInfo))
+        TempData["BasicDisplayMessage"] = "You must fill out all neccessary fields";
+        if (userEntity != null)
         {
-            var result = await _accountFactory.UpdateBasicInfoAsync(viewModel.BasicInfo, userEntity!);
-            if (result.StatusCode == Infrastructure.Models.StatusCode.ERROR)
+            if (TryValidateModel(basicForm))
             {
-
+                var result = await _accountFactory.UpdateBasicInfoAsync(basicForm, userEntity);
+                TempData["BasicDisplayMessage"] = result.Message;
             }
         }
-
-        //if (ModelState.ContainsKey("BasicInfo"))
-        //{
-        //    foreach (var entry in ModelState["BasicInfo"]!.Children!)
-        //    {
-        //        if (entry.ValidationState == ModelValidationState.Invalid)
-        //        {
-        //            basicBool = false;
-        //            break;
-        //        }
-        //    }
-
-        //    if (basicBool)
-        //    {
-
-        //    }
-        //}
-
-        //else if (ModelState["AddressInfo"]!.ValidationState == ModelValidationState.Valid)
-        //{
-        //    var result = await _accountFactory.UpdateAddressInfoAsync(viewModel.AddressInfo, userEntity!);
-        //    if (result.StatusCode == Infrastructure.Models.StatusCode.ERROR)
-        //    {
-
-        //    }
-        //}
-        userEntity = await _userManager.GetUserAsync(User);
-        viewModel.BasicInfo = _accountFactory.PopulateBasicInfo(userEntity!);
-        viewModel.AddressInfo = _accountFactory.PopulateAddressInfo(userEntity!);
-        return View(viewModel);
+        return RedirectToAction("Details");
     }
 
+    // 
+
+    [HttpPost]
+    [Route("/account/update-address-info")]
+    public async Task<IActionResult> SaveAddressInfo([Bind(Prefix = "AddressInfo")] AccountDetailsAddressInfoModel addressForm)
+    {
+        var userEntity = await _userManager.GetUserAsync(User);
+        //var viewModel = new AccountDetailsViewModel();
+        TempData["AddressDisplayMessage"] = "You must fill out all neccessary fields";
+        if (userEntity != null)
+        {
+            if (TryValidateModel(addressForm))
+            {
+                var result = await _accountFactory.UpdateAddressInfoAsync(addressForm, userEntity)!;
+                TempData["AddressDisplayMessage"] = result.Message;
+            }
+        }
+        return RedirectToAction("Details");
+    }
 
     [Route("/signout")]
     [HttpGet]

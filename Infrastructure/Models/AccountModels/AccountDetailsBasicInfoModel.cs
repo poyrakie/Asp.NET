@@ -9,10 +9,12 @@ public class AccountDetailsBasicInfoModel
 
     [Display(Name = "First name", Prompt = "Enter your first name", Order = 0)]
     [Required(ErrorMessage = "First name is required")]
+    [MinLength(2, ErrorMessage = "Required")]
     public string FirstName { get; set; } = null!;
 
     [Display(Name = "Last name", Prompt = "Enter your last name", Order = 1)]
     [Required(ErrorMessage = "Last name is required")]
+    [MinLength(2, ErrorMessage = "Required")]
     public string LastName { get; set; } = null!;
 
     [DataType(DataType.EmailAddress)]
@@ -24,6 +26,7 @@ public class AccountDetailsBasicInfoModel
     [Display(Name = "Phone", Prompt = "Enter your Phone", Order = 3)]
     [DataType(DataType.PhoneNumber)]
     [Required(ErrorMessage = "Phone is required")]
+    [MinLength(2, ErrorMessage = "Required")]
     public string Phone { get; set; } = null!;
 
     [Display(Name = "Bio", Prompt = "Add a short bio...", Order = 4)]

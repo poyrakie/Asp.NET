@@ -54,7 +54,10 @@
         .signup-box{
             display: grid;
             grid-template-rows: 1fr 1fr;
+            height: auto;
+            gap: 2rem;
             @include md{
+                grid-template-rows: 1fr;
                 grid-template-columns: 1fr auto;
                 gap: 1rem;
             }

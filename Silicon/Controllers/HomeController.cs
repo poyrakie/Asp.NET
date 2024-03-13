@@ -9,4 +9,14 @@ public class HomeController : Controller
         ViewData["Title"] = "Welcome";
         return View();
     }
+
+    [HttpPost]
+    public IActionResult Subscribe()
+    {
+        if (ModelState.IsValid)
+        {
+
+        }
+        return RedirectToAction("Index");
+    }
 }

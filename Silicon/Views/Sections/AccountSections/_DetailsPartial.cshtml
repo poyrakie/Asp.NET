@@ -22,7 +22,7 @@
                 <form method="post" asp-controller="Account" asp-action="SaveBasicInfo">
                     <h2>@Model.Title</h2>
                     <h5>Basic Info</h5>
-                    <p>@Model.BasicDisplayMessage</p>
+                    <p id="basicDisplayMessage">@Model.BasicDisplayMessage</p>
                     <div class="content">
                         <div id="form-firstname" class="input-group">
                             <label asp-for="BasicInfo.FirstName"></label>
@@ -55,7 +55,7 @@
 
                         <div class="form-buttons">
                             <button class="btn-gray" type="reset">Cancel</button>
-                            <button class="btn-theme" type="submit">Save changes</button>
+                            <button class="btn-theme" type="submit" id="basicSaveChanges">Save changes</button>
                         </div>
                     </div>
                 </form>
@@ -100,3 +100,4 @@
     </section>
 </div>
 <partial name="~/Views/Sections/GeneralSections/_ValidationScriptPartial.cshtml" />
+@* <partial name="~/Views/Sections/GeneralSections/_DisplayMessageScriptPartial.cshtml" /> *@

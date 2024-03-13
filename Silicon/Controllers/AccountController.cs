@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Silicon.ViewModels.AccountViewModels;
 using Infrastructure.Models.AccountModels;
-using Microsoft.IdentityModel.Tokens;
 
 namespace Silicon.Controllers;
 
@@ -66,7 +65,6 @@ public class AccountController(SignInManager<UserEntity> signInManager, UserMana
     public async Task<IActionResult> SaveAddressInfo([Bind(Prefix = "AddressInfo")] AccountDetailsAddressInfoModel addressForm)
     {
         var userEntity = await _userManager.GetUserAsync(User);
-        //var viewModel = new AccountDetailsViewModel();
         TempData["AddressDisplayMessage"] = "You must fill out all neccessary fields";
         if (userEntity != null)
         {

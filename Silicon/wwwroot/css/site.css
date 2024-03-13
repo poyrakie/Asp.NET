@@ -943,9 +943,12 @@ footer .container .social-media {
 #newsletter .container .signup-box {
   display: grid;
   grid-template-rows: 1fr 1fr;
+  height: auto;
+  gap: 2rem;
 }
 @media (min-width: 768px) {
   #newsletter .container .signup-box {
+    grid-template-rows: 1fr;
     grid-template-columns: 1fr auto;
     gap: 1rem;
   }

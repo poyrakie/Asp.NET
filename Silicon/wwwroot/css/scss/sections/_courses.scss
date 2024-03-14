@@ -1,0 +1,155 @@
+﻿.courses {
+
+    .container {
+
+        .link-box {
+            display: flex;
+
+            a {
+                color: $gray-700;
+
+                i {
+                    margin-right: 0.3rem;
+                }
+            }
+
+            .link-box-arrows {
+                font-size: 0.7rem;
+                color: $gray-700;
+                margin: 0 1rem;
+            }
+
+            p {
+                color: $theme;
+            }
+        }
+
+        .title-box {
+            display: flex;
+            justify-content: space-between;
+
+            .filter-box {
+                height: 2.7rem;
+                display: grid;
+                grid-template-columns: auto auto;
+                gap: 1rem;
+
+                select {
+                    border: 1px solid $gray-600;
+                    border-radius: 0.5rem;
+                    background-color: white;
+                    text-align: start;
+                    padding: 0 5rem 0 1rem;
+                }
+
+                .input-box {
+                    display: flex;
+                    align-items: center;
+                    border: 1px solid $gray-600;
+                    border-radius: 0.5rem;
+                    padding: 0 1rem;
+
+                    input {
+                        border: none;
+                    }
+                }
+            }
+        }
+
+        .content {
+            display: grid;
+            gap: 2rem;
+            grid-template-columns: 1fr 1fr 1fr;
+
+            .content-box {
+                max-width: 26rem;
+                overflow: hidden;
+                border-radius: 0.5rem;
+                box-shadow: 1px 1px 1px 1px $gray-300;
+                position: relative;
+                text-decoration: none;
+
+                &:hover {
+                    box-shadow: 1px 1px 1px 1px $gray-600;
+                    background-color: $gray-200;
+
+                    img {
+                        opacity: 0.8;
+                    }
+                }
+
+                .img-box {
+
+                    img {
+                        z-index: 0;
+                    }
+                }
+
+                .content-text-box {
+                    color: black;
+                    padding: 2rem 2rem 0 2rem;
+
+                    .author {
+                        color: $gray-700;
+                    }
+
+                    .price {
+                        color: $theme;
+                        font-weight: 700;
+                        font-size: x-large;
+                    }
+
+                    .time-raiting {
+                        color: $gray-600;
+                        display: flex;
+                        gap: 3rem;
+
+                        i {
+                            padding-right: 0.5rem;
+                        }
+                    }
+                }
+
+                .bookmark {
+                    background-color: white;
+                    border-radius: 2rem;
+                    width: 2.5rem;
+                    height: 2.5rem;
+                    text-align: center;
+                    padding-top: 0.5rem;
+                    position: absolute;
+                    z-index: 1;
+                    top: 1.5rem;
+                    right: 1.5rem;
+                    color: $gray-900;
+
+                    &:hover {
+                        background-color: $warning;
+                    }
+                }
+
+                .button-box {
+                }
+            }
+        }
+
+        .work-with-us {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 3rem 8rem;
+            background-color: $gray-100;
+            border-radius: 0.5rem;
+
+            .work-with-us-content {
+                h1 {
+                    width: 30rem;
+
+                    .theme-color {
+                        color: $theme;
+                    }
+                }
+            }
+        }
+    }
+}

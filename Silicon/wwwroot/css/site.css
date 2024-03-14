@@ -1233,3 +1233,121 @@ footer .container .social-media {
 #account-details .details .address-info form .content #form-city {
   grid-area: city;
 }
+
+.courses .container .link-box {
+  display: flex;
+}
+.courses .container .link-box a {
+  color: #565973;
+}
+.courses .container .link-box a i {
+  margin-right: 0.3rem;
+}
+.courses .container .link-box .link-box-arrows {
+  font-size: 0.7rem;
+  color: #565973;
+  margin: 0 1rem;
+}
+.courses .container .link-box p {
+  color: #6366F1;
+}
+.courses .container .title-box {
+  display: flex;
+  justify-content: space-between;
+}
+.courses .container .title-box .filter-box {
+  height: 2.7rem;
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 1rem;
+}
+.courses .container .title-box .filter-box select {
+  border: 1px solid #9397AD;
+  border-radius: 0.5rem;
+  background-color: white;
+  text-align: start;
+  padding: 0 5rem 0 1rem;
+}
+.courses .container .title-box .filter-box .input-box {
+  display: flex;
+  align-items: center;
+  border: 1px solid #9397AD;
+  border-radius: 0.5rem;
+  padding: 0 1rem;
+}
+.courses .container .title-box .filter-box .input-box input {
+  border: none;
+}
+.courses .container .content {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+.courses .container .content .content-box {
+  max-width: 26rem;
+  overflow: hidden;
+  border-radius: 0.5rem;
+  box-shadow: 1px 1px 1px 1px #E2E5F1;
+  position: relative;
+  text-decoration: none;
+}
+.courses .container .content .content-box:hover {
+  box-shadow: 1px 1px 1px 1px #9397AD;
+  background-color: #EFF2FC;
+}
+.courses .container .content .content-box:hover img {
+  opacity: 0.8;
+}
+.courses .container .content .content-box .img-box img {
+  z-index: 0;
+}
+.courses .container .content .content-box .content-text-box {
+  color: black;
+  padding: 2rem 2rem 0 2rem;
+}
+.courses .container .content .content-box .content-text-box .author {
+  color: #565973;
+}
+.courses .container .content .content-box .content-text-box .price {
+  color: #6366F1;
+  font-weight: 700;
+  font-size: x-large;
+}
+.courses .container .content .content-box .content-text-box .time-raiting {
+  color: #9397AD;
+  display: flex;
+  gap: 3rem;
+}
+.courses .container .content .content-box .content-text-box .time-raiting i {
+  padding-right: 0.5rem;
+}
+.courses .container .content .content-box .bookmark {
+  background-color: white;
+  border-radius: 2rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  text-align: center;
+  padding-top: 0.5rem;
+  position: absolute;
+  z-index: 1;
+  top: 1.5rem;
+  right: 1.5rem;
+  color: #0B0F19;
+}
+.courses .container .content .content-box .bookmark:hover {
+  background-color: #FFBA08;
+}
+.courses .container .work-with-us {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 3rem 8rem;
+  background-color: #F3F6FF;
+  border-radius: 0.5rem;
+}
+.courses .container .work-with-us .work-with-us-content h1 {
+  width: 30rem;
+}
+.courses .container .work-with-us .work-with-us-content h1 .theme-color {
+  color: #6366F1;
+}

@@ -1,4 +1,5 @@
 ﻿.courses {
+    padding-top: 5rem;
 
     .container {
 
@@ -25,8 +26,16 @@
         }
 
         .title-box {
-            display: flex;
-            justify-content: space-between;
+            text-align: center;
+            align-items: center;
+            margin-bottom: 3rem;
+
+            @include md {
+                margin-bottom: 0;
+                text-align: start;
+                display: flex;
+                justify-content: space-between;
+            }
 
             .filter-box {
                 height: 2.7rem;
@@ -59,7 +68,18 @@
         .content {
             display: grid;
             gap: 2rem;
-            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-columns: auto;
+            justify-content: center;
+            margin-bottom: 3rem;
+
+            @include md {
+                justify-content: baseline;
+                grid-template-columns: 1fr 1fr;
+            }
+
+            @include lg {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
 
             .content-box {
                 max-width: 26rem;
@@ -81,6 +101,7 @@
                 .img-box {
 
                     img {
+                        width: 100%;
                         z-index: 0;
                     }
                 }
@@ -142,12 +163,34 @@
             border-radius: 0.5rem;
 
             .work-with-us-content {
+                text-align: center;
+
+                @include lg {
+                    text-align: start;
+                }
+
                 h1 {
-                    width: 30rem;
+                    max-width: 30rem;
 
                     .theme-color {
                         color: $theme;
                     }
+                }
+
+                .btn-theme {
+                    width: 100%;
+
+                    @include lg {
+                        width: auto;
+                    }
+                }
+            }
+
+            img {
+                display: none;
+
+                @include lg {
+                    display: block;
                 }
             }
         }

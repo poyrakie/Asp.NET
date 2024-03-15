@@ -37,6 +37,15 @@ public class ResponseFactory
             StatusCode = StatusCode.EXISTS
         };
     }
+    public static ResponseResult Exists(object obj, string? message = null)
+    {
+        return new ResponseResult
+        {
+            ContentResult = obj,
+            Message = message ?? "Exists",
+            StatusCode = StatusCode.EXISTS
+        };
+    }
     public static ResponseResult NotFound(string? message = null)
     {
         return new ResponseResult

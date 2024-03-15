@@ -27,19 +27,19 @@
                         <div id="form-firstname" class="input-group">
                             <label asp-for="BasicInfo.FirstName"></label>
                             <span asp-validation-for="BasicInfo.FirstName"></span>
-                            <input asp-for="BasicInfo.FirstName" />
+                            <input asp-for="BasicInfo.FirstName" disabled="@Model.BasicInfo.IsExternalAccount" />
                         </div>
 
                         <div id="form-lastname" class="input-group">
                             <label asp-for="BasicInfo.LastName"></label>
                             <span asp-validation-for="BasicInfo.LastName"></span>
-                            <input asp-for="BasicInfo.LastName" />
+                            <input asp-for="BasicInfo.LastName" disabled="@Model.BasicInfo.IsExternalAccount" />
                         </div>
 
                         <div id="form-email" class="input-group">
                             <label asp-for="BasicInfo.Email"></label>
                             <span asp-validation-for="BasicInfo.Email"></span>
-                            <input asp-for="BasicInfo.Email" />
+                            <input asp-for="BasicInfo.Email" disabled="@Model.BasicInfo.IsExternalAccount" />
                         </div>
 
                         <div id="form-phone" class="input-group">

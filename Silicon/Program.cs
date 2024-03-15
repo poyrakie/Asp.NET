@@ -22,18 +22,40 @@ builder.Services.ConfigureApplicationCookie(x =>
 {
     x.LoginPath = "/signin";
     x.Cookie.HttpOnly = true;
+    x.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+    x.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+    x.SlidingExpiration = true;
 });
 
+builder.Services.AddAuthentication().AddFacebook(x =>
+{
+    x.AppId = "771287731254854";
+    x.AppSecret = "697f58411da15c9bab554e72c5451088";
+    x.Fields.Add("first_name");
+    x.Fields.Add("last_name");
+});
+
+builder.Services.AddAuthentication().AddGoogle(x =>
+{
+    x.ClientId = "846569615439-n5h04n47f0hcuklob6g0fknofbmbugkg.apps.googleusercontent.com";
+    x.ClientSecret = "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";
+    x.CallbackPath = "/signin-google";
+});
+
+
+builder.Services.AddScoped<ResponseResult>();
 
 builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<UserFactory>();
-builder.Services.AddScoped<ResponseResult>();
+
+builder.Services.AddScoped<AccountService>();
 builder.Services.AddScoped<AccountFactory>();
+
 builder.Services.AddScoped<AddressFactory>();
 builder.Services.AddScoped<AddressRepository>();
 builder.Services.AddScoped<AddressService>();
-builder.Services.AddScoped<AccountService>();
+
 
 var app = builder.Build();
 app.UseHsts();

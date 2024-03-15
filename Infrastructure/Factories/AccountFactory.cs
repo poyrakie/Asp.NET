@@ -25,7 +25,8 @@ public class AccountFactory(UserFactory userFactory, UserManager<UserEntity> use
             LastName = user.LastName,
             Email = user.Email!,
             Phone = user.PhoneNumber!,
-            Biography = user.Biography
+            Biography = user.Biography,
+            IsExternalAccount = user.IsExternalAccount,
         };
         return basicInfo;
     }
@@ -43,51 +44,5 @@ public class AccountFactory(UserFactory userFactory, UserManager<UserEntity> use
             addressInfo.City = addressEntity.City;
         }
         return addressInfo;
-    }
-    public async Task<ResponseResult> UpdateBasicInfoAsync(AccountDetailsBasicInfoModel model, UserEntity user)
-    {
-        try
-        {
-
-            if (model.Email != user.Email) 
-            {
-                var existsResult = await _userRepository.ExistsAsync(x => x.Email == model.Email);
-                if (existsResult.StatusCode == StatusCode.EXISTS)
-                {
-                    return ResponseFactory.Exists("A user with this email is already registered");
-                }
-            }
-
-            var responseResult = _userFactory.PopulateUserEntity(model, user!);
-            var entity = (UserEntity)responseResult.ContentResult!;
-
-            var result = await _userManager.UpdateAsync(entity!);
-            if (result.Errors.Any())
-            {
-                return ResponseFactory.Error("Something went wrong");
-            }
-            return ResponseFactory.Ok("Updated successfully");
-        }
-        catch (Exception ex) { return ResponseFactory.Error(ex.Message); }
-    }
-    public async Task<ResponseResult> UpdateAddressInfoAsync(AccountDetailsAddressInfoModel model, UserEntity user)
-    {
-        try
-        {
-            var addressResult = await _addressService.GetOrCreateAddressAsync(model);
-            if (addressResult.StatusCode == StatusCode.OK)
-            {
-                var addressEntity = (AddressEntity)addressResult.ContentResult!;
-                user!.AddressId = addressEntity.Id;
-                var userResult = await _userManager.UpdateAsync(user);
-                if (userResult.Errors.Any())
-                {
-                    return ResponseFactory.Error("Something went wrong");
-                }
-            }
-            return ResponseFactory.Ok("Updated successfully");
-        }
-        catch (Exception ex) { return ResponseFactory.Error(ex.Message); }
-
     }
 }

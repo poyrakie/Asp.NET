@@ -12,4 +12,5 @@ public class UserEntity : IdentityUser
     public string? Biography { get; set; }
     public string? ImgUrl { get; set; }
     public AddressEntity? Address { get; set; }
+    public bool IsExternalAccount { get; set; } = false;
 }

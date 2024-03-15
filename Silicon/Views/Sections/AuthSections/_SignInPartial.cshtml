@@ -22,6 +22,13 @@
                 <button class="btn-theme-s" type="submit">@Model.Title</button>
                 <a asp-controller="Account" asp-action="Forgot">Forgot your password?</a>
             </div>
+            <hr />
+            <h6 class="centered">Or sign in with your social network</h6>
+            <div class="external-providers">
+
+                <a class="btn-gray" asp-controller="Auth" asp-action="Google"><i class="fa-brands fa-google"></i>Google</a>
+                <a class="btn-gray" asp-controller="Auth" asp-action="Facebook"><i class="fa-brands fa-facebook"></i>Facebook</a>
+            </div>
         </form>
 
     </div>

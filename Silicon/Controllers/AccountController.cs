@@ -5,14 +5,17 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Silicon.ViewModels.AccountViewModels;
 using Infrastructure.Models.AccountModels;
+using Infrastructure.Services;
 
 namespace Silicon.Controllers;
 
 [Authorize]
-public class AccountController(SignInManager<UserEntity> signInManager, UserManager<UserEntity> userManager, AccountFactory accountFactory, UserFactory userFactory) : Controller
+public class AccountController(SignInManager<UserEntity> signInManager, UserManager<UserEntity> userManager, AccountFactory accountFactory, UserFactory userFactory, UserService userService, AddressService addressService) : Controller
 {
     private readonly SignInManager<UserEntity> _signInManager = signInManager;
     private readonly UserManager<UserEntity> _userManager = userManager;
+    private readonly UserService _userService = userService;
+    private readonly AddressService _addressService = addressService;
     private readonly AccountFactory _accountFactory = accountFactory;
     private readonly UserFactory _userFactory = userFactory;
 
@@ -51,7 +54,7 @@ public class AccountController(SignInManager<UserEntity> signInManager, UserMana
         {
             if (TryValidateModel(basicForm))
             {
-                var result = await _accountFactory.UpdateBasicInfoAsync(basicForm, userEntity);
+                var result = await _userService.UpdateBasicInfoAsync(basicForm, userEntity);
                 TempData["BasicDisplayMessage"] = result.Message;
             }
         }
@@ -70,7 +73,7 @@ public class AccountController(SignInManager<UserEntity> signInManager, UserMana
         {
             if (TryValidateModel(addressForm))
             {
-                var result = await _accountFactory.UpdateAddressInfoAsync(addressForm, userEntity)!;
+                var result = await _addressService.UpdateAddressInfoAsync(addressForm, userEntity)!;
                 TempData["AddressDisplayMessage"] = result.Message;
             }
         }

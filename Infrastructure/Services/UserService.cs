@@ -8,12 +8,13 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Infrastructure.Services;
 
-public class UserService(UserRepository repo, UserManager<UserEntity> userManager, SignInManager<UserEntity> signInManager, UserFactory userFactory)
+public class UserService(UserRepository repo, UserManager<UserEntity> userManager, SignInManager<UserEntity> signInManager, UserFactory userFactory, UserRepository userRepository)
 {
     private readonly UserFactory _userFactory = userFactory;
     private readonly UserRepository _repo = repo;
     private readonly UserManager<UserEntity> _userManager = userManager;
     private readonly SignInManager<UserEntity> _signInManager = signInManager;
+    private readonly UserRepository _userRepository = userRepository;
 
     public async Task<ResponseResult> RegisterUserAsync(SignUpFormModel form)
     {
@@ -36,7 +37,7 @@ public class UserService(UserRepository repo, UserManager<UserEntity> userManage
             }
             return ResponseFactory.Error("Something went wrong");
         }
-        catch (Exception ex) 
+        catch (Exception ex)
         {
             return ResponseFactory.Error(ex.Message);
         }
@@ -63,6 +64,87 @@ public class UserService(UserRepository repo, UserManager<UserEntity> userManage
             if (result.Succeeded)
                 return ResponseFactory.Ok();
             return ResponseFactory.Error("Incorrect email or password.");
+        }
+        catch (Exception ex) { return ResponseFactory.Error(ex.Message); }
+    }
+    public async Task<ResponseResult> FindUserAsync(string email)
+    {
+        try
+        {
+            var checkResult = await CheckIfUserExistsAsync(email);
+            if (checkResult.StatusCode == StatusCode.EXISTS)
+            {
+                var result = await _userManager.FindByEmailAsync(email);
+                if (result != null)
+                {
+                    return ResponseFactory.Exists(result);
+                }
+            }
+            return ResponseFactory.NotFound();
+        }
+        catch (Exception ex) { return ResponseFactory.Error(ex.Message); }
+    }
+    public async Task<ResponseResult> RegisterOrUpdateExternalAsync(ExternalLoginInfo info)
+    {
+        try
+        {
+            var populateResult = _userFactory.PopulateUserEntity(info);
+            var userEntity = (UserEntity)populateResult.ContentResult!;
+            var findResult = await FindUserAsync(userEntity.Email!);
+            var user = (UserEntity)findResult.ContentResult!;
+            if (findResult.StatusCode == StatusCode.NOT_FOUND)
+            {
+
+                var result = await _userManager.CreateAsync(userEntity);
+                if (result.Succeeded)
+                {
+                    userEntity = await _userManager.FindByEmailAsync(userEntity.Email!);
+                    return ResponseFactory.Ok(userEntity!, "New user registered");
+                }
+                return ResponseFactory.Error("Something went wrong, could not register user");
+            }
+
+            else if (findResult.StatusCode == StatusCode.EXISTS)
+            {
+
+                if (user.FirstName != userEntity.FirstName || user.LastName != userEntity.LastName || user.Email != userEntity.Email)
+                {
+                    var rePopulateResult = _userFactory.PopulateUserEntity(user, userEntity);
+                    user = (UserEntity)rePopulateResult.ContentResult!;
+                    await _userManager.UpdateAsync(user);
+                }
+                return ResponseFactory.Ok(user, "Updated user");
+            }
+            else
+            {
+                return ResponseFactory.Error("Something went wrong");
+            }
+        }
+        catch (Exception ex) { return ResponseFactory.Error(ex.Message); }
+    }
+
+    public async Task<ResponseResult> UpdateBasicInfoAsync(AccountDetailsBasicInfoModel model, UserEntity user)
+    {
+        try
+        {
+            if (model.Email != user.Email)
+            {
+                var existsResult = await _userRepository.ExistsAsync(x => x.Email == model.Email);
+                if (existsResult.StatusCode == StatusCode.EXISTS)
+                {
+                    return ResponseFactory.Exists("A user with this email is already registered");
+                }
+            }
+
+            var responseResult = _userFactory.PopulateUserEntity(model, user!);
+            var entity = (UserEntity)responseResult.ContentResult!;
+
+            var result = await _userManager.UpdateAsync(entity!);
+            if (result.Errors.Any())
+            {
+                return ResponseFactory.Error("Something went wrong");
+            }
+            return ResponseFactory.Ok("Updated successfully");
         }
         catch (Exception ex) { return ResponseFactory.Error(ex.Message); }
     }

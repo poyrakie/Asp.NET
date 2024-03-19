@@ -48,11 +48,18 @@ public class AccountController(SignInManager<UserEntity> signInManager, UserMana
     [Route("/account/update-basic-info")]
     public async Task<IActionResult> SaveBasicInfo([Bind(Prefix = "BasicInfo")] AccountDetailsBasicInfoModel basicForm)
     {
-        var userEntity = await _userManager.GetUserAsync(User);
+        var externalUser = await _signInManager.GetExternalLoginInfoAsync();
+        var claims = HttpContext.User.Identities.FirstOrDefault();
         TempData["BasicDisplayMessage"] = "You must fill out all neccessary fields";
-        if (userEntity != null)
+        if (externalUser is not null)
         {
-            if (TryValidateModel(basicForm))
+            var result = await _userService.UpdateExternalAsync(basicForm, externalUser, claims!);
+            TempData["BasicDisplayMessage"] = result.Message;
+        }
+        else if (TryValidateModel(basicForm))
+        {
+            var userEntity = await _userManager.GetUserAsync(User);
+            if (userEntity is not null)
             {
                 var result = await _userService.UpdateBasicInfoAsync(basicForm, userEntity);
                 TempData["BasicDisplayMessage"] = result.Message;

@@ -5,6 +5,7 @@ using Infrastructure.Models.AccountModels;
 using Infrastructure.Models.AuthModels;
 using Infrastructure.Repositories;
 using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace Infrastructure.Services;
 
@@ -147,5 +148,46 @@ public class UserService(UserRepository repo, UserManager<UserEntity> userManage
             return ResponseFactory.Ok("Updated successfully");
         }
         catch (Exception ex) { return ResponseFactory.Error(ex.Message); }
+    }
+    public async Task<ResponseResult> UpdateBasicInfoAsync(UserEntity user)
+    {
+        try
+        {
+            var result = await _userManager.UpdateAsync(user!);
+            if (result.Errors.Any())
+            {
+                return ResponseFactory.Error("Something went wrong");
+            }
+            return ResponseFactory.Ok("Updated successfully");
+        }
+        catch (Exception ex) { return ResponseFactory.Error(ex.Message); }
+    }
+    public async Task<ResponseResult> UpdateExternalAsync(AccountDetailsBasicInfoModel model, ExternalLoginInfo externalUser, ClaimsIdentity claims)
+    {
+        try
+        {
+            if (claims?.Name is not null)
+            {
+                if (externalUser.LoginProvider == "Facebook" || externalUser.LoginProvider == "Google")
+                {
+                    var existingUser = await _userManager.FindByEmailAsync(claims.Name);
+
+                    if (existingUser is not null)
+                    {
+                        existingUser.Biography = model.Biography;
+                        existingUser.PhoneNumber = model.Phone;
+
+                        var result = await UpdateBasicInfoAsync(existingUser);
+
+                        if (result.StatusCode == StatusCode.OK)
+                        {
+                            return ResponseFactory.Ok("Account information successfully updated");
+                        }
+                    }
+                }
+            }
+            return ResponseFactory.Error("Something went wrong.");
+        }
+        catch(Exception ex) { return ResponseFactory.Error(ex.Message); }
     }
 }

@@ -14,7 +14,7 @@ public class CoursesController : Controller
         return View();
     }
 
-    [HttpPost]
+    [HttpGet]
     public IActionResult SingleCourse()
     {
         return View();

@@ -22,12 +22,18 @@ public class UserService(UserRepository repo, UserManager<UserEntity> userManage
         try
         {
             var result = await CheckIfUserExistsAsync(form.Email);
+
             if (result.StatusCode == StatusCode.NOT_FOUND)
             {
                 var factoryResult = _userFactory.PopulateUserEntity(form);
                 if (factoryResult.StatusCode == StatusCode.OK)
                 {
-                    var userManagerResult = await _userManager.CreateAsync((UserEntity)factoryResult.ContentResult!, form.Password);
+                    var userEntity = (UserEntity)factoryResult.ContentResult!;
+                    if (IsTeacher(userEntity.FirstName))
+                    {
+                        userEntity.ImgUrl = "/images/bosscat.jpg";
+                    }
+                    var userManagerResult = await _userManager.CreateAsync(userEntity, form.Password);
                     if (userManagerResult.Succeeded)
                         return ResponseFactory.Ok("User registered successfully");
                 }
@@ -189,5 +195,13 @@ public class UserService(UserRepository repo, UserManager<UserEntity> userManage
             return ResponseFactory.Error("Something went wrong.");
         }
         catch(Exception ex) { return ResponseFactory.Error(ex.Message); }
+    }
+    public static bool IsTeacher(string firstName)
+    {
+        if (firstName == "Hans" || firstName == "Joakim" || firstName == "Tommy")
+        {
+            return true;
+        }
+        return false;
     }
 }

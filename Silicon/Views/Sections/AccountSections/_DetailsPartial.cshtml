@@ -1,10 +1,18 @@
-﻿@model AccountDetailsViewModel
+﻿@inject UserManager<UserEntity> _userManager
+@model AccountDetailsViewModel
 
 <div class="container">
     <section id="account-details">
         <aside>
             <div class="profile-info">
-                <img src="@Model.BasicInfo.ProfileImage" alt="@($"{Model.BasicInfo.FirstName} {Model.BasicInfo.LastName}")" />
+                @if(Model.BasicInfo.ProfileImage != null)
+                {
+                    <img src="@Model.BasicInfo.ProfileImage" alt="@($"{Model.BasicInfo.FirstName} {Model.BasicInfo.LastName}")" />
+                }
+                else
+                {
+                    <img src="/images/cat.jpg" alt="Cat" />
+                }
                 <h5>@($"{Model.BasicInfo.FirstName} {Model.BasicInfo.LastName}")</h5>
                 <p>@Model.BasicInfo.Email</p>
             </div>

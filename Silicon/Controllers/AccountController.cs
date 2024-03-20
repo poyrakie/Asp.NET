@@ -19,7 +19,7 @@ public class AccountController(SignInManager<UserEntity> signInManager, UserMana
     private readonly AccountFactory _accountFactory = accountFactory;
     private readonly UserFactory _userFactory = userFactory;
 
-
+    #region Account
     [Route("/account")]
     [HttpGet]
     public async Task<IActionResult> Details()
@@ -68,7 +68,6 @@ public class AccountController(SignInManager<UserEntity> signInManager, UserMana
         return RedirectToAction("Details");
     }
 
-    // 
 
     [HttpPost]
     [Route("/account/update-address-info")]
@@ -86,6 +85,7 @@ public class AccountController(SignInManager<UserEntity> signInManager, UserMana
         }
         return RedirectToAction("Details");
     }
+    #endregion
 
     [Route("/signout")]
     [HttpGet]
@@ -94,4 +94,96 @@ public class AccountController(SignInManager<UserEntity> signInManager, UserMana
         await _signInManager.SignOutAsync();
         return RedirectToAction("Index", "Home");
     }
+
+    #region Security
+    [Route("/security")]
+    [HttpGet]
+    public async Task<IActionResult> Security()
+    {
+        var userEntity = await _userManager.GetUserAsync(User);
+        var viewModel = new AccountSecurityViewModel();
+        if (userEntity != null)
+        {
+            viewModel.BasicInfo = _accountFactory.PopulateBasicInfo(userEntity!);
+        }
+        if (TempData.ContainsKey("PasswordDisplayMessage"))
+        {
+            viewModel.PasswordDisplayMessage = TempData["PasswordDisplayMessage"]!.ToString();
+        }
+        if (TempData.ContainsKey("DeleteDisplayMessage"))
+        {
+            viewModel.DeleteDisplayMessage = TempData["DeleteDisplayMessage"]!.ToString();
+        }
+
+
+        return View(viewModel);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> ChangePassword([Bind(Prefix = "Password")] AccountSecurityPasswordModel passwordForm)
+    {
+        var userEntity = await _userManager.GetUserAsync(User);
+
+        TempData["PasswordDisplayMessage"] = "You must fill out all neccessary fields correctly";
+
+        if (TryValidateModel(passwordForm))
+        {
+            if (userEntity != null)
+            {
+                var result = await _userManager.ChangePasswordAsync(userEntity, passwordForm.CurrentPassword, passwordForm.NewPassword);
+
+                if (result.Succeeded)
+                {
+                    TempData["PasswordDisplayMessage"] = "Updated password successfully";
+                }
+            }
+        }
+        return RedirectToAction("Security");
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> DeleteAccount([Bind(Prefix = "Delete")] AccountSecurityDeleteModel delete)
+    {
+        var userEntity = await _userManager.GetUserAsync(User);
+
+        if (TryValidateModel(delete))
+        {
+            if (userEntity != null)
+            {
+                var result = await _userManager.DeleteAsync(userEntity);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("SignOut");
+                }
+            }
+        }
+        TempData["DeleteDisplayMessage"] = "You must confirm the deletion of your account";
+        return RedirectToAction("Security");
+    }
+    #endregion
+
+
+    #region SavedCourses
+
+    public async Task<IActionResult> SavedCourses()
+    {
+        var userEntity = await _userManager.GetUserAsync(User);
+        var viewModel = new AccountDetailsViewModel();
+        if (userEntity != null)
+        {
+            viewModel.BasicInfo = _accountFactory.PopulateBasicInfo(userEntity!);
+            viewModel.AddressInfo = await _accountFactory.PopulateAddressInfoAsync(userEntity!);
+        }
+        if (TempData.ContainsKey("BasicDisplayMessage"))
+        {
+            viewModel.BasicDisplayMessage = TempData["BasicDisplayMessage"]!.ToString();
+        }
+        if (TempData.ContainsKey("AddressDisplayMessage"))
+        {
+            viewModel.AddressDisplayMessage = TempData["AddressDisplayMessage"]!.ToString();
+        }
+
+        return View(viewModel);
+    }
+    #endregion
 }

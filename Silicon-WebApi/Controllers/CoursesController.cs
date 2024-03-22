@@ -1,28 +1,38 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Infrastructure.Models.CourseModels;
+using Infrastructure.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Silicon_WebApi.Models;
 
 namespace Silicon_WebApi.Controllers;
 
 [Route("api/courses")]
 [ApiController]
-public class CoursesController : ControllerBase
+public class CoursesController(CourseService courseService) : ControllerBase
 {
-    private List<CoursesModel> _courses = [];
+    private readonly CourseService _courseService = courseService;
 
-    [HttpGet]
-    public IActionResult GetAll()
-    {
 
-        return Ok();
-    }
+    //[HttpGet]
+    //public IActionResult GetAll()
+    //{
+
+    //    return Ok();
+    //}
 
     [HttpPost]
-    public IActionResult Create(CoursesModel model)
+    public async Task<IActionResult> Create(CourseModel model)
     {
         if (ModelState.IsValid)
         {
-            return Created("", model);
+            var result = await _courseService.CreateCourseAsync(model);
+            if (result.StatusCode == Infrastructure.Models.StatusCode.OK)
+            {
+                return Created();
+            }
+            else if (result.StatusCode == Infrastructure.Models.StatusCode.EXISTS)
+            {
+                return Conflict();
+            }
         }
         return BadRequest();
     }

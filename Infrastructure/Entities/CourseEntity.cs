@@ -1,8 +1,14 @@
-﻿namespace Silicon_WebApi.Models;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-public class CoursesModel
+namespace Infrastructure.Entities;
+
+public class CourseEntity
 {
-    public string Id { get; set; } = null!;
+    public string Id { get; set; } = Guid.NewGuid().ToString();
     public string Title { get; set; } = null!;
     public string? ImageName { get; set; }
     public string? Author { get; set; }

@@ -1841,6 +1841,15 @@ footer .container .social-media {
   width: 100%;
   z-index: 0;
 }
+.courses .container .content .content-box .img-box .best-seller {
+  background-color: #22C55E;
+  padding: 0.2rem;
+  border-radius: 10%;
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  color: white;
+}
 .courses .container .content .content-box .content-text-box {
   color: black;
   padding: 2rem 2rem 0 2rem;
@@ -1848,10 +1857,25 @@ footer .container .social-media {
 .courses .container .content .content-box .content-text-box .author {
   color: #565973;
 }
+.courses .container .content .content-box .content-text-box .discount-price-box {
+  display: flex;
+  gap: 1rem;
+}
+.courses .container .content .content-box .content-text-box .discount-price-box .discount-price {
+  color: #EF4444;
+  font-weight: 700;
+  font-size: large;
+}
+.courses .container .content .content-box .content-text-box .discount-price-box .original-price {
+  text-decoration: line-through;
+  color: #9397AD;
+  font-weight: 700;
+  font-size: large;
+}
 .courses .container .content .content-box .content-text-box .price {
   color: #6366F1;
   font-weight: 700;
-  font-size: x-large;
+  font-size: large;
 }
 .courses .container .content .content-box .content-text-box .time-raiting {
   color: #9397AD;

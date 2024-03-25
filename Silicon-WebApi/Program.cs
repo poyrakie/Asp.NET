@@ -20,6 +20,8 @@ builder.Services.AddDbContext<DataContext>(x =>
 
 var app = builder.Build();
 
+app.UseCors(x => x.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod());
+
 
 app.UseSwagger();
 app.UseSwaggerUI();

@@ -104,6 +104,16 @@
                         width: 100%;
                         z-index: 0;
                     }
+
+                    .best-seller {
+                        background-color: $success;
+                        padding: 0.2rem;
+                        border-radius: 10%;
+                        position: absolute;
+                        top: 1rem;
+                        left: 1rem;
+                        color: white;
+                    }
                 }
 
                 .content-text-box {
@@ -114,10 +124,28 @@
                         color: $gray-700;
                     }
 
+                    .discount-price-box {
+                        display: flex;
+                        gap: 1rem;
+
+                        .discount-price {
+                            color: $danger;
+                            font-weight: 700;
+                            font-size: large;
+                        }
+
+                        .original-price {
+                            text-decoration: line-through;
+                            color: $gray-600;
+                            font-weight: 700;
+                            font-size: large;
+                        }
+                    }
+
                     .price {
                         color: $theme;
                         font-weight: 700;
-                        font-size: x-large;
+                        font-size: large;
                     }
 
                     .time-raiting {

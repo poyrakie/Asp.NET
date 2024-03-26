@@ -3,6 +3,7 @@ using Infrastructure.Filters;
 using Infrastructure.Models.CourseModels;
 using Infrastructure.Repositories;
 using Infrastructure.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Silicon_WebApi.Filters;
@@ -37,11 +38,11 @@ public class CoursesController(CourseService courseService, CourseRepository cou
 
     [UseApiKey]
     [HttpGet]
-    [Route("getone/{title}")]
-    public async Task<IActionResult> Get(string title)
+    [Route("getone/{id}")]
+    public async Task<IActionResult> Get(string id)
     {
 
-        var result = await _courseRepository.GetAsync(x => x.Title == title);
+        var result = await _courseRepository.GetAsync(x => x.Id == id);
         if (result.StatusCode == Infrastructure.Models.StatusCode.OK)
         {
             return Ok((CourseEntity)result.ContentResult!);
@@ -53,7 +54,7 @@ public class CoursesController(CourseService courseService, CourseRepository cou
         return BadRequest();
     }
 
-
+    [Authorize]
     [ApiKeyValidation]
     [HttpPost]
     public async Task<IActionResult> Create(CourseModel model)
@@ -69,6 +70,43 @@ public class CoursesController(CourseService courseService, CourseRepository cou
             {
                 return Conflict();
             }
+        }
+        return BadRequest();
+    }
+
+    [Authorize]
+    [UseApiKey]
+    [HttpPut]
+    public async Task<IActionResult> Update(CourseEntity entity)
+    {
+        if (ModelState.IsValid)
+        {
+            var result = await _courseRepository.UpdateAsync((x => x.Id == entity.Id), entity);
+            if(result.StatusCode == Infrastructure.Models.StatusCode.OK)
+            {
+                return Ok((CourseEntity)result.ContentResult!);
+            }
+            else if(result.StatusCode == Infrastructure.Models.StatusCode.NOT_FOUND)
+            {
+                return NotFound();
+            }
+        }
+        return BadRequest();
+    }
+
+    [Authorize]
+    [UseApiKey]
+    [HttpDelete]
+    public async Task<IActionResult> Delete(string id)
+    {
+        var result = await _courseRepository.DeleteAsync((x) => x.Id == id);
+        if (result.StatusCode == Infrastructure.Models.StatusCode.OK)
+        {
+            return Ok(null);
+        }
+        else if (result.StatusCode == Infrastructure.Models.StatusCode.NOT_FOUND)
+        {
+            return NotFound();
         }
         return BadRequest();
     }

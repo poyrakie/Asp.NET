@@ -172,6 +172,9 @@
                     right: 1.5rem;
                     color: $gray-900;
 
+                    .saved {
+                        color: $theme;
+                    }
                     &:hover {
                         background-color: $warning;
                     }

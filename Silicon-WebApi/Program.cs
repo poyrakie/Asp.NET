@@ -10,6 +10,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddScoped<SavedCoursesRepository>();
+
 builder.Services.AddScoped<CourseRepository>();
 builder.Services.AddScoped<CourseService>();
 builder.Services.AddScoped<CourseFactory>();

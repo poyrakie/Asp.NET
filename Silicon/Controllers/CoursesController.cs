@@ -1,5 +1,8 @@
 ﻿using Infrastructure.Entities;
+using Infrastructure.Repositories;
+using Infrastructure.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Storage.Json;
 using Newtonsoft.Json;
@@ -8,13 +11,17 @@ using Silicon.ViewModels.CoursesViewModels;
 namespace Silicon.Controllers;
 
 [Authorize]
-public class CoursesController : Controller
+public class CoursesController(UserManager<UserEntity> userManager, SavedCoursesService savedCoursesService, SavedCoursesRepository savedCoursesRepository, CourseService courseService) : Controller
 {
+    private readonly UserManager<UserEntity> _userManager = userManager;
+    private readonly SavedCoursesService _savedCoursesService = savedCoursesService;
+    private readonly SavedCoursesRepository _savedCoursesRepository = savedCoursesRepository;
+    private readonly CourseService _courseService = courseService;
+
     //[HttpGet]
     //[Route("/courses")]
     //public IActionResult Index()
     //{
-
     //    ViewData["Title"] = "Courses";
     //    return View();
     //}
@@ -23,26 +30,45 @@ public class CoursesController : Controller
     [Route("/courses")]
     public async Task<IActionResult> Index()
     {
-        ViewData["Title"] = "Courses";
-        using var http = new HttpClient();
-        var response = await http.GetAsync("https://localhost:7126/api/courses/getall?key=e7b38f97-46f2-4e42-8cf2-9e5b6b1b433b");
-        var json = await response.Content.ReadAsStringAsync();
-        var data = JsonConvert.DeserializeObject<IEnumerable<CourseEntity>>(json);
-        var viewModel = new CoursesViewModel
+        var viewModel = new CoursesViewModel();
+
+        var user = await _userManager.GetUserAsync(User);
+
+        var courseListResult = await _courseService.GetCourseListAsync();
+        if (courseListResult.StatusCode == Infrastructure.Models.StatusCode.OK)
+            viewModel.List = (IEnumerable<CourseEntity>)courseListResult.ContentResult!;
+
+        var savedListResult = await _savedCoursesService.CreateSavedList(user!);
+        if (savedListResult.StatusCode == Infrastructure.Models.StatusCode.OK)
+            viewModel.SavedList = (IEnumerable<SavedCoursesEntity>)savedListResult.ContentResult!;
+
+        if (TempData.ContainsKey("DisplayMessage"))
         {
-            List = data
-        };
+            viewModel.DisplayMessage = TempData["DisplayMessage"]!.ToString();
+        }
         return View(viewModel);
     }
 
     [HttpGet]
-    public IActionResult SingleCourse()
+    public async Task<IActionResult> SingleCourse(string id)
     {
-        return View();
+        var result = await _courseService.GetSingleCourseAsync(id);
+        if (result.StatusCode == Infrastructure.Models.StatusCode.OK)
+        {
+            return View((CourseEntity)result.ContentResult!);
+        }
+        TempData["DisplayMessage"] = "Something went wrong";
+        return RedirectToAction("Index");
     }
-    [HttpPost]
-    public IActionResult Bookmark()
+
+    public async Task<IActionResult> Bookmark(string id)
     {
-        return View();
+        var user = await _userManager.GetUserAsync(User);
+        if (user != null)
+        {
+            var result = await _savedCoursesService.CreateOrDeleteBookmarkAsync(id, user);
+            TempData["DisplayMessage"] = result.Message;
+        }
+        return RedirectToAction("Index");
     }
 }

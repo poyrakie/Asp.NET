@@ -56,6 +56,14 @@ builder.Services.AddScoped<AddressFactory>();
 builder.Services.AddScoped<AddressRepository>();
 builder.Services.AddScoped<AddressService>();
 
+builder.Services.AddScoped<SavedCoursesFactory>();
+builder.Services.AddScoped<SavedCoursesService>();
+builder.Services.AddScoped<SavedCoursesRepository>();
+
+builder.Services.AddScoped<CourseFactory>();
+builder.Services.AddScoped<CourseService>();
+builder.Services.AddScoped<CourseRepository>();
+
 
 var app = builder.Build();
 app.UseHsts();

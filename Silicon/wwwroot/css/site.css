@@ -1898,6 +1898,9 @@ footer .container .social-media {
   right: 1.5rem;
   color: #0B0F19;
 }
+.courses .container .content .content-box .bookmark .saved {
+  color: #6366F1;
+}
 .courses .container .content .content-box .bookmark:hover {
   background-color: #FFBA08;
 }
@@ -1941,11 +1944,19 @@ footer .container .social-media {
 }
 
 .single-course-showcase {
-  background-image: url("/images/courses/fullstack-background.svg");
+  position: relative;
+}
+.single-course-showcase .background-image {
   background-size: cover;
   background-repeat: no-repeat;
+  position: absolute;
+  z-index: -1;
+  filter: brightness(50%);
+  width: 100%;
+  height: 100%;
 }
 .single-course-showcase .container {
+  z-index: 1;
   color: white;
   padding: 5rem 0;
 }

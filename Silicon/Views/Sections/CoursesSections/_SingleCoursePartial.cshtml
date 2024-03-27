@@ -1,4 +1,9 @@
-﻿<section class="single-course-showcase">
+﻿@model CourseEntity
+
+
+<section class="single-course-showcase" >
+
+    <div class="background-image" style="background-image: url('/@Model.ImageName');" ></div>
     <div class="container">
         <div class="link-box">
             <a href=""><i class="fa-thin fa-house"></i>Home</a>
@@ -8,14 +13,25 @@
             <p>Fullstack Web Developer Course from Scratch</p>
         </div>
         <div class="tags">
-            <div class="tag-box best-seller">
-                Best Seller
-            </div>
+            @if (Model.IsBestSeller)
+            {
+                <div class="tag-box best-seller">
+                    Best Seller
+                </div>
+            }
+            @{
+
+                var decimalProcent = Model.LikesInProcent;
+                var showProcent = Math.Floor(decimalProcent);
+
+                var decimalLikes = Model.LikesInNumbers;
+                var showLikes = Math.Floor(decimalLikes / 100) / 10;
+            }
             <div class="tag-box digital">
                 Digital
             </div>
         </div>
-        <h1>Fullstack Web Developer Course from Scratch</h1>
+        <h1>@Model.Title</h1>
         <p>Egestas feugiat lorem eu neque suspendisse ullamcorper scelerisque aliquam mauris.</p>
 
         <div class="rating-box">
@@ -28,15 +44,15 @@
                 <p>(1.2K reviews)</p>
             </div>
 
-            <p class="likes"><i class="fa-light fa-thumbs-up"></i> 5K likes</p>
+            <p class="likes"><i class="fa-light fa-thumbs-up"></i> @showLikes K likes</p>
 
-            <p class="length"><i class="fa-light fa-clock"></i> 148 hours</p>
+            <p class="length"><i class="fa-light fa-clock"></i> @Model.Hours hours</p>
         </div>
         <div class="author-box">
-            <img src="~/images/courses/fullstack-author.svg" alt="">
+            <img src="~/images//courses/fullstack-author.svg" alt="">
             <div class="text-box">
                 <h5>Created by</h5>
-                <p>Albert Flores</p>
+                <p>@Model.Author</p>
             </div>
         </div>
     </div>
@@ -68,8 +84,15 @@
                 <p><i class="fa-regular fa-infinity"></i><span>Full lifetime access</span></p>
                 <p><i class="fa-regular fa-trophy"></i><span>Certificate of completion</span></p>
                 <div class="price-box">
-                    <h2>$28.99</h2>
-                    <h4>$49.00</h4>
+                    @if (Model.DiscountPrice == 0)
+                    {
+                        <h2 class="price">$@Model.OriginalPrice</h2>
+                    }
+                    else
+                    {
+                        <h2 class="discount-price">$@Model.DiscountPrice</h2>
+                        <h4 class="original-price">$@Model.OriginalPrice</h4>
+                    }
                 </div>
                 <button class="btn-theme-s">Join course</button>
             </div>

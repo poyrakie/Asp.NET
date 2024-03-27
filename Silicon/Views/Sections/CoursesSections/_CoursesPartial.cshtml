@@ -1,42 +1,45 @@
 ﻿@model CoursesViewModel
 
-<main>
 
-    <section class="courses">
-        <div class="container">
-            <div class="link-box">
-                <a asp-controller="Home" asp-action="Index"><i class="fa-thin fa-house"></i>Home</a>
-                <p class="link-box-arrows"><i class="fa-solid fa-chevrons-right"></i></p>
-                <p>Courses</p>
-            </div>
-            <div class="title-box">
-                <h1>
-                    Courses
-                </h1>
-                <div class="filter-box">
-                    <select name="" id="categories">
-                        <option value="All categories">All categories</option>
-                    </select>
-                    <div class="input-box">
-                        <input type="text" placeholder="Search courses">
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                    </div>
-
+<section class="courses">
+    <div class="container">
+        <div class="link-box">
+            <a asp-controller="Home" asp-action="Index"><i class="fa-thin fa-house"></i>Home</a>
+            <p class="link-box-arrows"><i class="fa-solid fa-chevrons-right"></i></p>
+            <p>Courses</p>
+        </div>
+        <div class="title-box">
+            <h1>
+                Courses
+            </h1>
+            <div class="filter-box">
+                <select name="" id="categories">
+                    <option value="All categories">All categories</option>
+                </select>
+                <div class="input-box">
+                    <input type="text" placeholder="Search courses">
+                    <i class="fa-solid fa-magnifying-glass"></i>
                 </div>
+
             </div>
-            <div class="content">
-                @foreach(var item in Model.List)
+        </div>
+        <p>@Model.DisplayMessage</p>
+        <div class="content">
+                
+            @if(Model.List!.Count() != 0)
+            {
+                @foreach (var item in Model.List!)
                 {
-                    
+
                     var decimalProcent = item.LikesInProcent;
                     var showProcent = Math.Floor(decimalProcent);
 
                     var decimalLikes = item.LikesInNumbers;
-                    var showLikes = Math.Floor(decimalLikes / 100)/10;
-                    
+                    var showLikes = Math.Floor(decimalLikes / 100) / 10;
+
 
                     <div class="content-box">
-                        <a asp-controller="Courses" asp-action="SingleCourse">
+                        <a asp-controller="Courses" asp-action="SingleCourse" asp-route-id="@item.Id">
                             <div class="img-box">
                                 <img src="@item.ImageName" alt=$"{@item.Title} image">
                                 @if (item.IsBestSeller)
@@ -61,34 +64,48 @@
                                 <hr>
                                 <div class="time-raiting">
                                     <p><i class="fa-light fa-clock"></i>@item.Hours hours</p>
-                                    <p><i class="fa-light fa-thumbs-up"></i>@showProcent% (@showLikes+K)</p>
+                                    <p><i class="fa-light fa-thumbs-up"></i>@showProcent% (@showLikes)K</p>
 
                                 </div>
                             </div>
 
                         </a>
-                        <a asp-controller="Courses" asp-action="Bookmark" class="bookmark">
-                            <i class="fa-light fa-bookmark"></i>
+                        <a asp-controller="Courses" asp-action="Bookmark" asp-route-id="@item.Id" class="bookmark">
+                            @if(Model.SavedList != null)
+                            {                            
+                                @if(Model.SavedList!.Any(savedItem => savedItem.CourseId == item.Id)){
+                                    <i class="fa-sharp fa-solid fa-bookmark saved"></i>
+                                }
+                                else {
+                                    <i class="fa-light fa-bookmark"></i>
+                                }
+                            }
+                            else
+                            {
+                                <i class="fa-light fa-bookmark"></i>
+                            }
                         </a>
+
+                            
                     </div>
                 }
+            }
 
-                <div class="button-box">
-                </div>
-            </div>
-            <div class="work-with-us">
-                <div class="work-with-us-content">
-                    <p>
-                        Ready to get started?
-                    </p>
-                    <h1>
-                        Take Your <span class="theme-color">Skills</span> to the Next Level
-                    </h1>
-                    <button class="btn-theme">Work with us</button>
-                </div>
-                <img src="~/images/courses-lady.svg" alt="large legged lady">
+
+            <div class="button-box">
             </div>
         </div>
-    </section>
-
-</main>
+        <div class="work-with-us">
+            <div class="work-with-us-content">
+                <p>
+                    Ready to get started?
+                </p>
+                <h1>
+                    Take Your <span class="theme-color">Skills</span> to the Next Level
+                </h1>
+                <button class="btn-theme">Work with us</button>
+            </div>
+            <img src="~/images/courses-lady.svg" alt="large legged lady">
+        </div>
+    </div>
+</section>

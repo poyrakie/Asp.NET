@@ -39,7 +39,7 @@ public class CourseService(CourseRepository courseRepository, CourseFactory cour
         }
         catch (Exception ex) { return ResponseFactory.Error(ex.Message); }
     }
-    public async Task<ResponseResult> GetCourseListAsync()
+    public async Task<ResponseResult> ApiCallGetCourseListAsync()
     {
         try
         {
@@ -53,7 +53,7 @@ public class CourseService(CourseRepository courseRepository, CourseFactory cour
         }
         catch (Exception ex) { return ResponseFactory.Error(ex.Message); }
     }
-    public async Task<ResponseResult> GetSingleCourseAsync(string id)
+    public async Task<ResponseResult> ApiCallGetSingleCourseAsync(string id)
     {
         try
         {

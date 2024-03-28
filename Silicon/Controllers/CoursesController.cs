@@ -34,7 +34,7 @@ public class CoursesController(UserManager<UserEntity> userManager, SavedCourses
 
         var user = await _userManager.GetUserAsync(User);
 
-        var courseListResult = await _courseService.GetCourseListAsync();
+        var courseListResult = await _courseService.ApiCallGetCourseListAsync();
         if (courseListResult.StatusCode == Infrastructure.Models.StatusCode.OK)
             viewModel.List = (IEnumerable<CourseEntity>)courseListResult.ContentResult!;
 
@@ -50,9 +50,10 @@ public class CoursesController(UserManager<UserEntity> userManager, SavedCourses
     }
 
     [HttpGet]
+    [Route("/singlecourse")]
     public async Task<IActionResult> SingleCourse(string id)
     {
-        var result = await _courseService.GetSingleCourseAsync(id);
+        var result = await _courseService.ApiCallGetSingleCourseAsync(id);
         if (result.StatusCode == Infrastructure.Models.StatusCode.OK)
         {
             return View((CourseEntity)result.ContentResult!);

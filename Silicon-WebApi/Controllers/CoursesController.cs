@@ -55,7 +55,7 @@ public class CoursesController(CourseService courseService, CourseRepository cou
     }
 
     [Authorize]
-    [ApiKeyValidation]
+    [UseApiKey]
     [HttpPost]
     public async Task<IActionResult> Create(CourseModel model)
     {
@@ -96,7 +96,7 @@ public class CoursesController(CourseService courseService, CourseRepository cou
 
     [Authorize]
     [UseApiKey]
-    [HttpDelete]
+    [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(string id)
     {
         var result = await _courseRepository.DeleteAsync((x) => x.Id == id);

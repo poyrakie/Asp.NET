@@ -73,7 +73,7 @@
                         <a asp-controller="Courses" asp-action="Bookmark" asp-route-id="@item.Id" class="bookmark">
                             @if(Model.SavedList != null)
                             {                            
-                                @if(Model.SavedList!.Any(savedItem => savedItem.CourseId == item.Id)){
+                                @if(Model.SavedList!.Any(x => x.CourseId == item.Id)){
                                     <i class="fa-sharp fa-solid fa-bookmark saved"></i>
                                 }
                                 else {

@@ -45,6 +45,10 @@ builder.Services.AddAuthentication().AddGoogle(x =>
 
 builder.Services.AddScoped<ResponseResult>();
 
+builder.Services.AddScoped<SubscriberService>();
+builder.Services.AddScoped<SubscriberFactory>();
+builder.Services.AddScoped<SubscriberRepository>();
+
 builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<UserFactory>();
@@ -63,6 +67,10 @@ builder.Services.AddScoped<SavedCoursesRepository>();
 builder.Services.AddScoped<CourseFactory>();
 builder.Services.AddScoped<CourseService>();
 builder.Services.AddScoped<CourseRepository>();
+
+builder.Services.AddScoped<ContactRepository>();
+builder.Services.AddScoped<ContactFactory>();
+builder.Services.AddScoped<ContactService>();
 
 
 var app = builder.Build();

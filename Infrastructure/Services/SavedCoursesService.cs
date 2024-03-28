@@ -4,6 +4,7 @@ using Infrastructure.Models;
 using Infrastructure.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 
 namespace Infrastructure.Services;
@@ -39,6 +40,36 @@ public class SavedCoursesService(SavedCoursesRepository savedCoursesRepository, 
         }
         catch (Exception ex) { return ResponseFactory.Error(ex.Message); }
     }
+
+    public async Task<ResponseResult> DeleteAllAsync(UserEntity user)
+    {
+        try
+        {
+            var savedListResult = await CreateSavedList(user!);
+            if (savedListResult.StatusCode == StatusCode.OK)
+            {
+                var savedList = (IEnumerable<SavedCoursesEntity>)savedListResult.ContentResult!;
+                if (savedList.Any())
+                {
+                    foreach (var entity in savedList)
+                    {
+                        var result = await _savedCoursesRepository.DeleteAsync(x => x.UserId == entity.UserId && x.CourseId == entity.CourseId);
+                        if (result.StatusCode == StatusCode.OK)
+                            continue;
+                        return ResponseFactory.Error("Something went wrong");
+                    }
+                    return ResponseFactory.Ok("Saved courses have been cleansed");
+                }
+            }
+            else if (savedListResult.StatusCode == StatusCode.NOT_FOUND)
+            {
+                return ResponseFactory.NotFound("No list to cleanse was found");
+            }
+            return ResponseFactory.Error("Something went wrong");
+        }
+        catch(Exception ex) { return ResponseFactory.Error(ex.Message); }
+    }
+
     public async Task<ResponseResult> CreateSavedList(UserEntity user)
     {
         try

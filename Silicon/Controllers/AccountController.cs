@@ -6,11 +6,12 @@ using Microsoft.AspNetCore.Mvc;
 using Silicon.ViewModels.AccountViewModels;
 using Infrastructure.Models.AccountModels;
 using Infrastructure.Services;
+using Silicon.ViewModels.CoursesViewModels;
 
 namespace Silicon.Controllers;
 
 [Authorize]
-public class AccountController(SignInManager<UserEntity> signInManager, UserManager<UserEntity> userManager, AccountFactory accountFactory, UserFactory userFactory, UserService userService, AddressService addressService) : Controller
+public class AccountController(SignInManager<UserEntity> signInManager, UserManager<UserEntity> userManager, AccountFactory accountFactory, UserFactory userFactory, UserService userService, AddressService addressService, CourseService courseService, SavedCoursesService savedCoursesService) : Controller
 {
     private readonly SignInManager<UserEntity> _signInManager = signInManager;
     private readonly UserManager<UserEntity> _userManager = userManager;
@@ -18,6 +19,8 @@ public class AccountController(SignInManager<UserEntity> signInManager, UserMana
     private readonly AddressService _addressService = addressService;
     private readonly AccountFactory _accountFactory = accountFactory;
     private readonly UserFactory _userFactory = userFactory;
+    private readonly CourseService _courseService = courseService;
+    private readonly SavedCoursesService _savedCoursesService = savedCoursesService;
 
     #region Account
     [Route("/account")]
@@ -165,25 +168,55 @@ public class AccountController(SignInManager<UserEntity> signInManager, UserMana
 
     #region SavedCourses
 
+    [Route("/savedcourses")]
+    [HttpGet]
     public async Task<IActionResult> SavedCourses()
     {
-        var userEntity = await _userManager.GetUserAsync(User);
-        var viewModel = new AccountDetailsViewModel();
-        if (userEntity != null)
-        {
-            viewModel.BasicInfo = _accountFactory.PopulateBasicInfo(userEntity!);
-            viewModel.AddressInfo = await _accountFactory.PopulateAddressInfoAsync(userEntity!);
-        }
-        if (TempData.ContainsKey("BasicDisplayMessage"))
-        {
-            viewModel.BasicDisplayMessage = TempData["BasicDisplayMessage"]!.ToString();
-        }
-        if (TempData.ContainsKey("AddressDisplayMessage"))
-        {
-            viewModel.AddressDisplayMessage = TempData["AddressDisplayMessage"]!.ToString();
-        }
 
+        var user = await _userManager.GetUserAsync(User);
+        var viewModel = new AccountSavedCoursesViewModel();
+        if (user != null)
+        {
+            viewModel.BasicInfo = _accountFactory.PopulateBasicInfo(user!);
+        }
+        var courseListResult = await _courseService.ApiCallGetCourseListAsync();
+        if (courseListResult.StatusCode == Infrastructure.Models.StatusCode.OK)
+            viewModel.List = (IEnumerable<CourseEntity>)courseListResult.ContentResult!;
+
+        var savedListResult = await _savedCoursesService.CreateSavedList(user!);
+        if (savedListResult.StatusCode == Infrastructure.Models.StatusCode.OK)
+            viewModel.SavedList = (IEnumerable<SavedCoursesEntity>)savedListResult.ContentResult!;
+
+        if (TempData.ContainsKey("DisplayMessage"))
+        {
+            viewModel.DisplayMessage = TempData["DisplayMessage"]!.ToString();
+        }
         return View(viewModel);
     }
+
+    public async Task<IActionResult> Bookmark(string id)
+    {
+        var user = await _userManager.GetUserAsync(User);
+        if (user != null)
+        {
+            var result = await _savedCoursesService.CreateOrDeleteBookmarkAsync(id, user);
+            TempData["DisplayMessage"] = result.Message;
+        }
+        return RedirectToAction("SavedCourses");
+    }
+
+
+    public async Task<IActionResult> BigBertha()
+    {
+
+        var user = await _userManager.GetUserAsync(User);
+        var result = await _savedCoursesService.DeleteAllAsync(user!);
+        TempData["DisplayMessage"] = result.Message;
+        return RedirectToAction("SavedCourses");
+    }
     #endregion
+
+
+
+
 }

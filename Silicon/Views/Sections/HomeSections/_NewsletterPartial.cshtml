@@ -1,5 +1,5 @@
-﻿@using Infrastructure.Models.HomeModels
-@model NewsletterModel
+﻿@model HomeViewModel
+
 <section id="newsletter">
     <div class="container">
         <div class="title-box">
@@ -11,41 +11,42 @@
                 <h5>Sign up for <br>Newsletters</h5>
                     <div class="content">
                         <div class="content-box">
-                            <input asp-for="DailyNewsLetter">
-                            <label asp-for="DailyNewsLetter"></label>
+                            <input asp-for="@Model.Newsletter.DailyNewsLetter">
+                            <label asp-for="@Model.Newsletter.DailyNewsLetter"></label>
                         </div>
                         <div class="content-box">
-                            <input asp-for="AdvertisingUpdates">
-                            <label asp-for="AdvertisingUpdates"></label>
+                            <input asp-for="@Model.Newsletter.AdvertisingUpdates">
+                            <label asp-for="@Model.Newsletter.AdvertisingUpdates"></label>
                         </div>
                         <div class="content-box">
-                            <input asp-for="WeekInReview">
-                            <label asp-for="WeekInReview"></label>
+                            <input asp-for="@Model.Newsletter.WeekInReview">
+                            <label asp-for="@Model.Newsletter.WeekInReview"></label>
                         </div>
                         <div class="content-box">
-                            <input asp-for="EventUpdates">
-                            <label asp-for="EventUpdates"></label>
+                            <input asp-for="@Model.Newsletter.EventUpdates">
+                            <label asp-for="@Model.Newsletter.EventUpdates"></label>
                         </div>
                         <div class="content-box">
-                            <input asp-for="StartupsWeekly">
-                            <label asp-for="StartupsWeekly"></label>
+                            <input asp-for="@Model.Newsletter.StartupsWeekly">
+                            <label asp-for="@Model.Newsletter.StartupsWeekly"></label>
                         </div>
                         <div class="content-box">
-                            <input asp-for="Podcasts">
-                            <label asp-for="Podcasts"></label>
+                            <input asp-for="@Model.Newsletter.Podcasts">
+                            <label asp-for="@Model.Newsletter.Podcasts"></label>
                         </div>
 
                     </div>
             </div>
-                <span asp-validation-for="Email"></span>
+                <span asp-validation-for="@Model.Newsletter.Email"></span>
             <div class="signup-box">
                 <div class="mail-input">
                     <i class="fa-regular fa-envelope"></i>
-                    <input asp-for="Email">
+                    <input asp-for="@Model.Newsletter.Email">
                 </div>
-                <button class="btn-theme" type="submit" asp-fragment="newsletter">Subscribe*</button>
+                <button class="btn-theme" type="submit">Subscribe*</button>
             </div>
             <p>*Yes, I agree to the <a href="">terms</a> and <a href="">privacy policy</a>.</p>
+            <p>@Model.DisplayMessage</p>
         </form>
     </div>
 </section>

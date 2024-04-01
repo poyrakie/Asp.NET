@@ -1,13 +1,7 @@
 #showcase {
-    // position: relative;
     padding-bottom: 80px;
     display: flex;
     justify-content: space-between;
-    // @include lg {
-    //     display: flex;
-    //     justify-content: flex-end;
-    //     margin-bottom: 0px;
-    // }
 
     img {
         display: none;
@@ -15,35 +9,18 @@
         @include xl{
             display: block;
         }
-        // position: relative;
-        // z-index: -1;
-        // width: 100%;
-        // height: auto;
-
-        // @include lg {
-        //     width: 45%;
-        // }
     }
 
     .container {
         display: flex;
         justify-content: space-between;
-        // height: 100%;
-
-        // @include lg {
-        //     // position: absolute;
-        //     left: 0;
-        //     right: 0;
-        // }
 
         .content {
             margin-top: 0px;
-            // width: 100%;
             text-align: center;
 
             @include lg {
                 margin-top: 100px;
-                // width: 40%;
                 text-align: left;
             }
 

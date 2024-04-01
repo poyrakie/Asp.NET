@@ -1,111 +1,112 @@
 ﻿@inject UserManager<UserEntity> _userManager
 @model AccountDetailsViewModel
 
-<div class="container">
-    <section id="account-details">
-        <aside>
-            <div class="profile-info">
-                @if(Model.BasicInfo.ProfileImage != null)
-                {
-                    <img src="@Model.BasicInfo.ProfileImage" alt="@($"{Model.BasicInfo.FirstName} {Model.BasicInfo.LastName}")" />
-                }
-                else
-                {
-                    <img src="/images/cat.jpg" alt="Cat" />
-                }
-                <h5>@($"{Model.BasicInfo.FirstName} {Model.BasicInfo.LastName}")</h5>
-                <p>@Model.BasicInfo.Email</p>
+<section class="account-details-section">
+    <div class="container">
+        <section id="account-details">
+            <aside>
+                <div class="profile-info">
+                    @if (Model.BasicInfo.ProfileImage != null)
+                    {
+                        <img src="@Model.BasicInfo.ProfileImage" alt="@($"{Model.BasicInfo.FirstName} {Model.BasicInfo.LastName}")" />
+                    }
+                    else
+                    {
+                        <img src="/images/cat.jpg" alt="Cat" />
+                    }
+                    <h5>@($"{Model.BasicInfo.FirstName} {Model.BasicInfo.LastName}")</h5>
+                    <p>@Model.BasicInfo.Email</p>
+                </div>
+
+                <nav>
+                    <a class="btn-theme-s" asp-controller="Account" asp-action="Details"><i class="fa-regular fa-gear"></i>Account Details</a>
+                    <a class="btn-transparent" asp-controller="Account" asp-action="Security"><i class="fa-regular fa-lock"></i>Security</a>
+                    <a class="btn-transparent" asp-controller="Account" asp-action="SavedCourses"><i class="fa-light fa-bookmark"></i>Saved Courses</a>
+                    <a class="btn-transparent" asp-controller="Account" asp-action="SignOut"><i class="fa-sharp fa-regular fa-arrow-right-from-bracket"></i>Sign out</a>
+                </nav>
+            </aside>
+
+            <div class="details">
+                <section class="basic-info">
+                    <form method="post" asp-controller="Account" asp-action="SaveBasicInfo">
+                        <h2>@Model.Title</h2>
+                        <h5>Basic Info</h5>
+                        <p id="basicDisplayMessage">@Model.BasicDisplayMessage</p>
+                        <div class="content">
+                            <div id="form-firstname" class="input-group">
+                                <label asp-for="BasicInfo.FirstName"></label>
+                                <span asp-validation-for="BasicInfo.FirstName"></span>
+                                <input asp-for="BasicInfo.FirstName" disabled="@Model.BasicInfo.IsExternalAccount" />
+                            </div>
+
+                            <div id="form-lastname" class="input-group">
+                                <label asp-for="BasicInfo.LastName"></label>
+                                <span asp-validation-for="BasicInfo.LastName"></span>
+                                <input asp-for="BasicInfo.LastName" disabled="@Model.BasicInfo.IsExternalAccount" />
+                            </div>
+
+                            <div id="form-email" class="input-group">
+                                <label asp-for="BasicInfo.Email"></label>
+                                <span asp-validation-for="BasicInfo.Email"></span>
+                                <input asp-for="BasicInfo.Email" disabled="@Model.BasicInfo.IsExternalAccount" />
+                            </div>
+
+                            <div id="form-phone" class="input-group">
+                                <label asp-for="BasicInfo.Phone"></label>
+                                <span asp-validation-for="BasicInfo.Phone"></span>
+                                <input asp-for="BasicInfo.Phone" />
+                            </div>
+
+                            <div id="form-bio" class="input-group">
+                                <label asp-for="BasicInfo.Biography">Bio <span>(optional)</span></label>
+                                <textarea asp-for="BasicInfo.Biography"></textarea>
+                            </div>
+
+                            <div class="form-buttons">
+                                <button class="btn-gray" type="reset">Cancel</button>
+                                <button class="btn-theme" type="submit" id="basicSaveChanges">Save changes</button>
+                            </div>
+                        </div>
+                    </form>
+                </section>
+                <hr />
+                <section class="address-info">
+                    <form method="post" asp-controller="Account" asp-action="SaveAddressInfo">
+                        <h5>Address</h5>
+                        <p>@Model.AddressDisplayMessage</p>
+                        <div class="content">
+                            <div id="form-addressline-1" class="input-group">
+                                <label asp-for="AddressInfo.Addressline_1"></label>
+                                <span asp-validation-for="AddressInfo.Addressline_1"></span>
+                                <input asp-for="AddressInfo.Addressline_1" />
+                            </div>
+                            <div id="form-addressline-2" class="input-group">
+                                <label asp-for="AddressInfo.Addressline_2"></label>
+                                <span asp-validation-for="AddressInfo.Addressline_2"></span>
+                                <input asp-for="AddressInfo.Addressline_2" />
+                            </div>
+
+                            <div id="form-postalcode" class="input-group">
+                                <label asp-for="AddressInfo.PostalCode"></label>
+                                <span asp-validation-for="AddressInfo.PostalCode"></span>
+                                <input asp-for="AddressInfo.PostalCode" />
+                            </div>
+
+                            <div id="form-city" class="input-group">
+                                <label asp-for="AddressInfo.City"></label>
+                                <span asp-validation-for="AddressInfo.City"></span>
+                                <input asp-for="AddressInfo.City" />
+                            </div>
+
+                            <div class="form-buttons">
+                                <button class="btn-gray" type="reset">Cancel</button>
+                                <button class="btn-theme" type="submit">Save changes</button>
+                            </div>
+                        </div>
+                    </form>
+                </section>
             </div>
-
-            <nav>
-                <a class="btn-theme-s" asp-controller="Account" asp-action="Details"><i class="fa-regular fa-gear"></i>Account Details</a>
-                <a class="btn-transparent" asp-controller="Account" asp-action="Security"><i class="fa-regular fa-lock"></i>Security</a>
-                <a class="btn-transparent" asp-controller="Account" asp-action="SavedCourses"><i class="fa-light fa-bookmark"></i>Saved Courses</a>
-                <a class="btn-transparent" asp-controller="Account" asp-action="SignOut"><i class="fa-sharp fa-regular fa-arrow-right-from-bracket"></i>Sign out</a>
-            </nav>
-        </aside>
-
-        <div class="details">
-            <section class="basic-info">
-                <form method="post" asp-controller="Account" asp-action="SaveBasicInfo">
-                    <h2>@Model.Title</h2>
-                    <h5>Basic Info</h5>
-                    <p id="basicDisplayMessage">@Model.BasicDisplayMessage</p>
-                    <div class="content">
-                        <div id="form-firstname" class="input-group">
-                            <label asp-for="BasicInfo.FirstName"></label>
-                            <span asp-validation-for="BasicInfo.FirstName"></span>
-                            <input asp-for="BasicInfo.FirstName" disabled="@Model.BasicInfo.IsExternalAccount" />
-                        </div>
-
-                        <div id="form-lastname" class="input-group">
-                            <label asp-for="BasicInfo.LastName"></label>
-                            <span asp-validation-for="BasicInfo.LastName"></span>
-                            <input asp-for="BasicInfo.LastName" disabled="@Model.BasicInfo.IsExternalAccount" />
-                        </div>
-
-                        <div id="form-email" class="input-group">
-                            <label asp-for="BasicInfo.Email"></label>
-                            <span asp-validation-for="BasicInfo.Email"></span>
-                            <input asp-for="BasicInfo.Email" disabled="@Model.BasicInfo.IsExternalAccount" />
-                        </div>
-
-                        <div id="form-phone" class="input-group">
-                            <label asp-for="BasicInfo.Phone"></label>
-                            <span asp-validation-for="BasicInfo.Phone"></span>
-                            <input asp-for="BasicInfo.Phone" />
-                        </div>
-
-                        <div id="form-bio" class="input-group">
-                            <label asp-for="BasicInfo.Biography">Bio <span>(optional)</span></label>
-                            <textarea asp-for="BasicInfo.Biography"></textarea>
-                        </div>
-
-                        <div class="form-buttons">
-                            <button class="btn-gray" type="reset">Cancel</button>
-                            <button class="btn-theme" type="submit" id="basicSaveChanges">Save changes</button>
-                        </div>
-                    </div>
-                </form>
-            </section>
-            <hr />
-            <section class="address-info">
-                <form method="post" asp-controller="Account" asp-action="SaveAddressInfo">
-                    <h5>Address</h5>
-                    <p>@Model.AddressDisplayMessage</p>
-                    <div class="content">
-                        <div id="form-addressline-1" class="input-group">
-                            <label asp-for="AddressInfo.Addressline_1"></label>
-                            <span asp-validation-for="AddressInfo.Addressline_1"></span>
-                            <input asp-for="AddressInfo.Addressline_1" />
-                        </div>
-                        <div id="form-addressline-2" class="input-group">
-                            <label asp-for="AddressInfo.Addressline_2"></label>
-                            <span asp-validation-for="AddressInfo.Addressline_2"></span>
-                            <input asp-for="AddressInfo.Addressline_2" />
-                        </div>
-
-                        <div id="form-postalcode" class="input-group">
-                            <label asp-for="AddressInfo.PostalCode"></label>
-                            <span asp-validation-for="AddressInfo.PostalCode"></span>
-                            <input asp-for="AddressInfo.PostalCode" />
-                        </div>
-
-                        <div id="form-city" class="input-group">
-                            <label asp-for="AddressInfo.City"></label>
-                            <span asp-validation-for="AddressInfo.City"></span>
-                            <input asp-for="AddressInfo.City" />
-                        </div>
-
-                        <div class="form-buttons">
-                            <button class="btn-gray" type="reset">Cancel</button>
-                            <button class="btn-theme" type="submit">Save changes</button>
-                        </div>
-                    </div>
-                </form>
-            </section>
-        </div>
-    </section>
-</div>
+        </section>
+    </div>
+</section>
 <partial name="~/Views/Sections/GeneralSections/_ValidationScriptPartial.cshtml" />
-@* <partial name="~/Views/Sections/GeneralSections/_DisplayMessageScriptPartial.cshtml" /> *@

@@ -1,25 +1,28 @@
 #tools {
     padding: 6rem 0;
-    .container{
+
+    .container {
         display: flex;
         flex-direction: column;
         align-items: center;
-        .tool-title{
 
+        .tool-title {
             text-align: center;
             max-width: 45rem;
             margin-bottom: 1rem;
-            p{
+
+            p {
                 margin-top: 1rem;
                 @include standard-text;
-                color: $gray-600;
+                color: var(--color-gray-600);
             }
         }
 
-        .content{
+        .content {
             display: grid;
             gap: 0.5rem;
             grid-template-rows: auto auto auto auto auto auto auto auto;
+
             @include md {
                 grid-template-columns: auto auto;
                 grid-template-rows: auto auto auto auto;
@@ -35,14 +38,17 @@
                 grid-template-rows: auto auto;
                 grid-template-columns: auto auto auto auto;
             }
-            .content-box{
+
+            .content-box {
                 padding: 2rem;
                 text-decoration: none;
-                color: $gray-700;
-                &:hover{
+                color: var(--color-gray-700);
+
+                &:hover {
                     border-radius: 0.5rem;
-                    box-shadow: 0.3rem 0.3rem 0.3rem 0.3rem $gray-300;
+                    box-shadow: 0.3rem 0.3rem 0.3rem 0.3rem var(--color-gray-300);
                 }
+
                 img {
                     margin-bottom: 1rem;
                 }

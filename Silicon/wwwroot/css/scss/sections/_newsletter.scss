@@ -1,7 +1,8 @@
-#newsletter{
-    background-color: $gray-100;
+#newsletter {
+    background-color: var(--color-gray-100);
     padding: 6rem 0;
-    .container{
+
+    .container {
         display: flex;
         flex-direction: column;
 
@@ -10,78 +11,91 @@
         }
 
 
-        .title-box{
+        .title-box {
             display: flex;
             gap: 3rem;
             padding-bottom: 3rem;
             text-align: center;
-            @include md{
+
+            @include md {
                 text-align: start;
             }
-            img{
+
+            img {
                 display: none;
-                @include md{
-                    display:block;
+
+                @include md {
+                    display: block;
                 }
             }
         }
-        .sign-up{
+
+        .sign-up {
             display: block;
             text-align: center;
+
             @include md {
                 display: flex;
                 text-align: start;
             }
+
             padding-bottom: 3rem;
-            .content{
+
+            .content {
                 display: grid;
-                grid-template-columns: auto ;
-                @include md{
+                grid-template-columns: auto;
+
+                @include md {
                     grid-template-columns: auto auto;
                     grid-template-rows: auto auto auto;
                 }
 
-                @include lg{
+                @include lg {
                     grid-template-columns: auto auto auto;
                     grid-template-rows: auto auto;
                 }
 
-                .content-box{
+                .content-box {
                     margin: 0 3rem;
                 }
             }
         }
-        .signup-box{
+
+        .signup-box {
             display: grid;
             grid-template-rows: 1fr 1fr;
             height: auto;
             gap: 2rem;
-            @include md{
+
+            @include md {
                 grid-template-rows: 1fr;
                 grid-template-columns: 1fr auto;
                 gap: 1rem;
             }
 
 
-            .mail-input{
+            .mail-input {
                 display: flex;
-                border: 1px $gray-400;
-                background-color: white;
+                border: 1px solid var(--color-gray-400);
+                background-color: var(--color-gray-100);
                 border-radius: 1rem;
                 padding: 1rem;
-                
-                input{
+
+                input {
+                    background-color: var(--color-gray-100);
                     margin-left: 0.5rem;
                     width: 100%;
                     border: none;
                 }
+
                 i {
-                    padding-top:0.3rem;
+                    padding-top: 0.3rem;
                     font-size: 18px;
-                    color: $gray-600
+                    color: var(--color-gray-600);
                 }
             }
-            a{
+
+            a {
                 padding: 0 3rem;
             }
         }

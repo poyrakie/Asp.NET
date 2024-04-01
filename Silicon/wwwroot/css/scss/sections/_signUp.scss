@@ -8,7 +8,7 @@
         margin: 10rem auto;
 
         label {
-            color: $gray-900;
+            color: var(--color-gray-900);
         }
 
         .create-form-name {
@@ -33,7 +33,7 @@
         .input-box {
             display: block;
             padding: 0.8rem;
-            border: 1px $gray-400 solid;
+            border: 1px var(--color-gray-400) solid;
             border-radius: 0.3rem;
             width: 100%;
         }

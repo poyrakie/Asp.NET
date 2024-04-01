@@ -3,35 +3,44 @@
     justify-content: center;
     position: relative;
     height: 50dvw;
+    background-color: $white;
 
 
     .light-text {
         @include h5;
         z-index: 1;
         color: white;
-        @include lg{
+
+        @include lg {
             @include h1;
             color: white;
             padding-top: 1rem;
         }
-        @include xl{
+
+        @include xl {
             padding-top: 4rem;
         }
     }
+
     .dark-text {
         @include h5;
         padding-left: 3rem;
-        @include lg{
+        color: $black;
+
+        @include lg {
             @include h1;
+            color: $black;
             padding-top: 1rem;
         }
-        @include xl{
+
+        @include xl {
+            color: $black;
             padding-top: 4rem;
         }
     }
 
 
-    .dark{
+    .dark {
         position: absolute;
         background-color: $gray-900;
         top: 0%;
@@ -41,7 +50,7 @@
         z-index: 0;
     }
 
-    .slider{
+    .slider {
         position: absolute;
         left: 50%;
         width: 4px;
@@ -49,6 +58,7 @@
         background-color: $theme;
         transform: translateX(-50%);
         z-index: 1;
+
         i {
             position: absolute;
             top: 50%;
@@ -60,12 +70,12 @@
             padding: 4px;
         }
     }
-    img{
-        position:absolute;
+
+    img {
+        position: absolute;
         width: 50dvw;
         top: 10dvw;
         left: 25dvw;
         z-index: 0;
     }
-
 }

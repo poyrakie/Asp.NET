@@ -1,8 +1,10 @@
-#account-security {
-    display: grid;
-    grid-template-columns: 2fr 5fr;
-    gap: 30px;
-    margin-bottom: 70px;
+#account-saved-courses {
+    .container {
+        display: grid;
+        grid-template-columns: 2fr 5fr;
+        gap: 30px;
+        margin-bottom: 70px;
+    }
 
     @include lg {
         gap: 100px;
@@ -13,7 +15,7 @@
     }
 
     aside {
-        border-right: 1px solid $gray-300;
+        border-right: 1px solid var(--color-gray-300);
         padding-right: 20px;
 
         .profile-info {
@@ -93,7 +95,7 @@
 
             .course-box {
                 max-width: 26rem;
-                box-shadow: 1px 1px 1px 1px $gray-300;
+                box-shadow: 1px 1px 1px 1px var(--color-gray-300);
                 border-radius: 0.5rem;
                 overflow: hidden;
 
@@ -115,7 +117,7 @@
                     }
 
                     .bookmark {
-                        background-color: white;
+                        background-color: var(--color-gray-100);
                         border-radius: 2rem;
                         width: 2.5rem;
                         height: 2.5rem;
@@ -125,7 +127,7 @@
                         z-index: 1;
                         top: 1.5rem;
                         right: 1.5rem;
-                        color: $gray-900;
+                        color: var(--color-gray-900);
 
                         .saved {
                             color: $theme;

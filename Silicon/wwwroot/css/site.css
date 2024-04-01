@@ -1775,10 +1775,10 @@ footer .container .social-media {
   padding: 2rem 2rem 0 2rem;
 }
 #account-saved-courses .saved-items .content .course-box .course-text-box h5 {
-  color: #33354D;
+  color: var(--color-gray-800);
 }
 #account-saved-courses .saved-items .content .course-box .course-text-box p {
-  color: #565973;
+  color: var(--color-gray-700);
 }
 #account-saved-courses .saved-items .content .course-box .course-text-box hr {
   display: none;
@@ -1815,7 +1815,7 @@ footer .container .social-media {
 #account-saved-courses .saved-items .content .course-box .course-text-box .time-rating {
   display: none;
   gap: 1rem;
-  color: #9397AD;
+  color: var(--color-gray-600);
 }
 #account-saved-courses .saved-items .content .course-box .course-text-box .time-rating i {
   margin-right: 0.5rem;
@@ -1827,7 +1827,7 @@ footer .container .social-media {
 }
 #account-saved-courses .saved-items .content .course-box .course-text-box:hover {
   opacity: 0.6;
-  background-color: #EFF2FC;
+  background-color: var(--color-gray-200);
 }
 
 .courses {

@@ -12,13 +12,13 @@ namespace Silicon_WebApi.Controllers;
 
 [Route("api/courses")]
 [ApiController]
+[UseApiKey]
 
 public class CoursesController(CourseService courseService, CourseRepository courseRepository) : ControllerBase
 {
     private readonly CourseService _courseService = courseService;
     private readonly CourseRepository _courseRepository = courseRepository;
 
-    [UseApiKey]
     [HttpGet]
     [Route("getall")]
     public async Task<IActionResult> GetAll()
@@ -36,7 +36,6 @@ public class CoursesController(CourseService courseService, CourseRepository cou
         return BadRequest();
     }
 
-    [UseApiKey]
     [HttpGet]
     [Route("getone/{id}")]
     public async Task<IActionResult> Get(string id)
@@ -55,7 +54,6 @@ public class CoursesController(CourseService courseService, CourseRepository cou
     }
 
     [Authorize]
-    [UseApiKey]
     [HttpPost]
     public async Task<IActionResult> Create(CourseModel model)
     {
@@ -75,7 +73,6 @@ public class CoursesController(CourseService courseService, CourseRepository cou
     }
 
     [Authorize]
-    [UseApiKey]
     [HttpPut]
     public async Task<IActionResult> Update(CourseEntity entity)
     {
@@ -95,7 +92,6 @@ public class CoursesController(CourseService courseService, CourseRepository cou
     }
 
     [Authorize]
-    [UseApiKey]
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(string id)
     {

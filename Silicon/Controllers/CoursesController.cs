@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Storage.Json;
 using Newtonsoft.Json;
 using Silicon.ViewModels.CoursesViewModels;
+using System.ComponentModel;
 
 namespace Silicon.Controllers;
 
@@ -28,15 +29,15 @@ public class CoursesController(UserManager<UserEntity> userManager, SavedCourses
 
     [HttpGet]
     [Route("/courses")]
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(string category = "", string searchQuery = "", int pageNumber = 1, int pageSize = 3)
     {
         var viewModel = new CoursesViewModel();
 
         var user = await _userManager.GetUserAsync(User);
 
-        var courseListResult = await _courseService.ApiCallGetCourseListAsync();
+        var courseListResult = await _courseService.ApiCallGetCourseListAsync(category, searchQuery, pageNumber, pageSize);
         if (courseListResult.StatusCode == Infrastructure.Models.StatusCode.OK)
-            viewModel.List = (IEnumerable<CourseEntity>)courseListResult.ContentResult!;
+            viewModel.CourseList = (IEnumerable<CourseEntity>)courseListResult.ContentResult!;
 
         var savedListResult = await _savedCoursesService.CreateSavedList(user!);
         if (savedListResult.StatusCode == Infrastructure.Models.StatusCode.OK)

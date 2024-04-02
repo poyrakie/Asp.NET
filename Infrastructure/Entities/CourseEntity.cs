@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Entities;
 
+[PrimaryKey("Id")]
 public class CourseEntity
 {
     public string Id { get; set; } = Guid.NewGuid().ToString();
@@ -18,4 +15,5 @@ public class CourseEntity
     public decimal DiscountPrice { get; set; }
     public decimal LikesInProcent { get; set; }
     public decimal LikesInNumbers { get; set; }
+    public virtual ICollection<CourseCategoryEntity>? CourseCategories { get; set; }
 }

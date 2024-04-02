@@ -43,12 +43,35 @@
                 grid-template-columns: auto auto;
                 gap: 1rem;
 
-                select {
-                    border: 1px solid var(--color-gray-600);
-                    border-radius: 0.5rem;
-                    background-color: var(--color-gray-001);
-                    text-align: start;
-                    padding: 0 5rem 0 1rem;
+                .select {
+                    position: relative;
+                    min-width:300px;
+
+                    .selected{
+                        padding: 8px 16px;
+                        border-radius: 8px;
+                        border: 1px solid var(--color-gray-400);
+                        cursor: pointer;
+                    }
+                    .select-options {
+                        display: none;
+                        position: absolute;
+                        top: 100%;
+                        left: 0;
+                        right: 0;
+                        background-color: var(--color-white);
+                        border: 1px solid var(--color-gray-400);
+                        z-index: 9999;
+
+                        .option {
+                            padding: 10px;
+                            cursor: pointer;
+                        }
+
+                        .option:hover {
+                            background-color: var(--color-gray-400);
+                        }
+                    }
                 }
 
                 .input-box {

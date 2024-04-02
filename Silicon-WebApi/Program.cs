@@ -24,6 +24,10 @@ builder.Services.AddScoped<ContactRepository>();
 builder.Services.AddScoped<ContactFactory>();
 builder.Services.AddScoped<ContactService>();
 
+builder.Services.AddScoped<CategoryRepository>();
+
+builder.Services.AddScoped<CourseCategoryRepository>();
+
 builder.Services.RegisterJwt(builder.Configuration);
 builder.Services.AddDbContext<DataContext>(x =>
     x.UseSqlServer(builder.Configuration.GetConnectionString("SqlServer"))

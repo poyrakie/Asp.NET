@@ -72,6 +72,10 @@ builder.Services.AddScoped<ContactRepository>();
 builder.Services.AddScoped<ContactFactory>();
 builder.Services.AddScoped<ContactService>();
 
+builder.Services.AddScoped<CategoryRepository>();
+
+builder.Services.AddScoped<CourseCategoryRepository>();
+
 
 var app = builder.Build();
 app.UseHsts();

@@ -9,15 +9,18 @@
   <ItemGroup>
     <Content Remove="compilerconfig.json" />
     <Content Remove="wwwroot\js\displayMessage.js" />
+    <Content Remove="wwwroot\js\filter.js" />
   </ItemGroup>
 
   <ItemGroup>
     <_ContentIncludedByDefault Remove="wwwroot\js\displayMessage.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\filter.js" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="compilerconfig.json" />
     <None Include="wwwroot\js\displayMessage.js" />
+    <None Include="wwwroot\js\filter.js" />
   </ItemGroup>
 
   <ItemGroup>

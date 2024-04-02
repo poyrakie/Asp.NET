@@ -12,23 +12,27 @@
             <h1>
                 Courses
             </h1>
-            <div class="filter-box">
-                <select name="" id="categories">
-                    <option value="All categories">All categories</option>
-                </select>
+
+            <form class="filter-box">
+                <div class="select">
+                    <div class="selected">All categories</div>
+                    <div class="select-options">
+                        <div class="option" data-value="all">All categories</div>
+                        <div class="option" data-value="snopp">snopp</div>
+                    </div>
+                </div>
                 <div class="input-box">
-                    <input type="text" placeholder="Search courses">
+                    <input id="searchQuery" type="text" placeholder="Search courses">
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </div>
-
-            </div>
+            </form>
         </div>
         <p>@Model.DisplayMessage</p>
         <div class="content">
                 
-            @if(Model.List!.Count() != 0)
+            @if (Model.CourseList!.Count() != 0)
             {
-                @foreach (var item in Model.List!)
+                @foreach (var item in Model.CourseList!)
                 {
 
                     var decimalProcent = item.LikesInProcent;
@@ -109,3 +113,4 @@
         </div>
     </div>
 </section>
+<script src="/js/filter.js" asp-append-version="true"></script>

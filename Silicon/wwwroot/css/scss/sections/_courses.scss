@@ -45,14 +45,15 @@
 
                 .select {
                     position: relative;
-                    min-width:300px;
+                    min-width: 300px;
 
-                    .selected{
+                    .selected {
                         padding: 8px 16px;
                         border-radius: 8px;
                         border: 1px solid var(--color-gray-400);
                         cursor: pointer;
                     }
+
                     .select-options {
                         display: none;
                         position: absolute;
@@ -204,10 +205,15 @@
                         background-color: $warning;
                     }
                 }
-
-                .button-box {
-                }
             }
+
+        }
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
         }
 
         .work-with-us {

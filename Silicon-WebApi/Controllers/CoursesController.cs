@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Silicon_WebApi.Filters;
+using System.Web.Helpers;
 
 namespace Silicon_WebApi.Controllers;
 
@@ -18,6 +19,23 @@ public class CoursesController(CourseService courseService, CourseRepository cou
 {
     private readonly CourseService _courseService = courseService;
     private readonly CourseRepository _courseRepository = courseRepository;
+
+    [HttpGet]
+    [Route("getallwithfilters")]
+    public async Task<IActionResult> GetAll(string category = "", string searchQuery = "", int pageNumber = 1, int pageSize = 3)
+    {
+
+        var result = await _courseService.GetAllCoursesWithFiltersAsync(category, searchQuery, pageNumber, pageSize);
+        if (result.StatusCode == Infrastructure.Models.StatusCode.OK)
+        {
+            return Ok((CourseResultModel)result.ContentResult!);
+        }
+        else if (result.StatusCode == Infrastructure.Models.StatusCode.NOT_FOUND)
+        {
+            return NotFound();
+        }
+        return BadRequest();
+    }
 
     [HttpGet]
     [Route("getall")]

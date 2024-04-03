@@ -53,8 +53,6 @@ const checkBoxValidator = (element) => {
     }
 }
 
-//let inputs = forms[0].querySelectorAll('input')
-//let secondInputs = forms[1].querySelectorAll('input')
 let forms = document.querySelectorAll('form')
 
 forms.forEach(form => {
@@ -86,83 +84,3 @@ forms.forEach(form => {
         }
     })
 })
-
-//for (i = 0, i < forms.length, i++) {
-//    let inputs = forms[i].querySelectorAll('input')
-//    inputs.forEach(input => {
-//        if (input.dataset.val === 'true') {
-
-//            if (input.type === 'checkbox') {
-//                input.addEventListener('change', (e) => {
-//                    checkBoxValidator(e.target)
-//                })
-//            } else {
-
-//                input.addEventListener('keyup', (e) => {
-//                    switch (e.target.type) {
-//                        case 'text':
-//                            textValidator(e.target)
-//                            break;
-//                        case 'email':
-//                            emailValidator(e.target)
-//                            break;
-//                        case 'password':
-//                            passwordValidator(e.target)
-//                            break;
-//                    }
-//                })
-//            }
-//        }
-//    })
-//}
-
-//inputs.forEach(input => {
-//    if (input.dataset.val === 'true') {
-
-//        if (input.type === 'checkbox') {
-//            input.addEventListener('change', (e) => {
-//                checkBoxValidator(e.target)
-//            })
-//        } else {
-
-//            input.addEventListener('keyup', (e) => {
-//                switch (e.target.type) {
-//                    case 'text':
-//                        textValidator(e.target)
-//                        break;
-//                    case 'email':
-//                        emailValidator(e.target)
-//                        break;
-//                    case 'password':
-//                        passwordValidator(e.target)
-//                        break;
-//                }
-//            })
-//        }
-//    }
-//})
-//secondInputs.forEach(input => {
-//    if (input.dataset.val === 'true') {
-
-//        if (input.type === 'checkbox') {
-//            input.addEventListener('change', (e) => {
-//                checkBoxValidator(e.target)
-//            })
-//        } else {
-
-//            input.addEventListener('keyup', (e) => {
-//                switch (e.target.type) {
-//                    case 'text':
-//                        textValidator(e.target)
-//                        break;
-//                    case 'email':
-//                        emailValidator(e.target)
-//                        break;
-//                    case 'password':
-//                        passwordValidator(e.target)
-//                        break;
-//                }
-//            })
-//        }
-//    }
-//})

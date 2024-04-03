@@ -1,4 +1,6 @@
 ﻿using Infrastructure.Entities;
+using Infrastructure.Models;
+using Infrastructure.Models.CourseModels;
 using Infrastructure.Repositories;
 using Infrastructure.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -12,11 +14,11 @@ using System.ComponentModel;
 namespace Silicon.Controllers;
 
 [Authorize]
-public class CoursesController(UserManager<UserEntity> userManager, SavedCoursesService savedCoursesService, SavedCoursesRepository savedCoursesRepository, CourseService courseService) : Controller
+public class CoursesController(UserManager<UserEntity> userManager, SavedCoursesService savedCoursesService, CourseService courseService, CategoryRepository categoryRepository) : Controller
 {
     private readonly UserManager<UserEntity> _userManager = userManager;
     private readonly SavedCoursesService _savedCoursesService = savedCoursesService;
-    private readonly SavedCoursesRepository _savedCoursesRepository = savedCoursesRepository;
+    private readonly CategoryRepository _categoryRepository = categoryRepository;
     private readonly CourseService _courseService = courseService;
 
     //[HttpGet]
@@ -34,10 +36,25 @@ public class CoursesController(UserManager<UserEntity> userManager, SavedCourses
         var viewModel = new CoursesViewModel();
 
         var user = await _userManager.GetUserAsync(User);
+        var categoryResult = await _categoryRepository.GetAllAsync();
+        if (categoryResult.StatusCode == Infrastructure.Models.StatusCode.OK)
+        {
+            viewModel.CategoryList = (IEnumerable<CategoryEntity>)categoryResult.ContentResult!;
+        }
 
         var courseListResult = await _courseService.ApiCallGetCourseListAsync(category, searchQuery, pageNumber, pageSize);
         if (courseListResult.StatusCode == Infrastructure.Models.StatusCode.OK)
-            viewModel.CourseList = (IEnumerable<CourseEntity>)courseListResult.ContentResult!;
+        {
+            var courseResult = (CourseResultModel)courseListResult.ContentResult!;
+            viewModel.Pagination = new PaginationModel
+            {
+                TotalPages = courseResult.TotalPages,
+                TotalItems = courseResult.TotalItems,
+                PageSize = pageSize,
+                PageNumber = pageNumber
+            };
+            viewModel.CourseList = courseResult.Courses!;
+        }
 
         var savedListResult = await _savedCoursesService.CreateSavedList(user!);
         if (savedListResult.StatusCode == Infrastructure.Models.StatusCode.OK)

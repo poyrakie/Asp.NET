@@ -2007,6 +2007,13 @@ footer .container .social-media {
 .courses .container .content .content-box .bookmark:hover {
   background-color: #FFBA08;
 }
+.courses .container .pagination {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
 .courses .container .work-with-us {
   display: flex;
   justify-content: space-between;

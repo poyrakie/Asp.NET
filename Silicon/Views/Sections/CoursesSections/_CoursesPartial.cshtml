@@ -18,18 +18,25 @@
                     <div class="selected">All categories</div>
                     <div class="select-options">
                         <div class="option" data-value="all">All categories</div>
-                        <div class="option" data-value="snopp">snopp</div>
+                        @if(Model.CategoryList!.Count() != 0)
+                        {
+                            foreach(var category in Model.CategoryList!)
+                            {
+                                <div class="option" data-value="@category.Name">@category.Name</div>
+                            }
+                        }
+                        
                     </div>
                 </div>
                 <div class="input-box">
-                    <input id="searchQuery" type="text" placeholder="Search courses">
+                    <input id="searchQuery" name="searcQuery" type="text" placeholder="Search courses">
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </div>
             </form>
         </div>
         <p>@Model.DisplayMessage</p>
+
         <div class="content">
-                
             @if (Model.CourseList!.Count() != 0)
             {
                 @foreach (var item in Model.CourseList!)
@@ -96,9 +103,23 @@
             }
 
 
-            <div class="button-box">
-            </div>
         </div>
+        @if(Model.Pagination != null && Model.Pagination.TotalPages > 1)
+        {
+            <div class="pagination">
+                @for (int i = 1; i <= Model.Pagination.TotalPages; i++)
+                {
+                    if(i == Model.Pagination.PageNumber)
+                    {
+                        <span class="btn-theme">@i</span>
+                    }
+                    else
+                    {
+                        <a class="btn-gray" href="@Url.Action("Index", new { pageNumber = i, pageSize = Model.Pagination.PageSize })">@i</a>
+                    }
+                }
+            </div>
+        }
         <div class="work-with-us">
             <div class="work-with-us-content">
                 <p>

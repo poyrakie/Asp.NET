@@ -6,21 +6,20 @@ using Microsoft.AspNetCore.Mvc;
 using Silicon.ViewModels.AccountViewModels;
 using Infrastructure.Models.AccountModels;
 using Infrastructure.Services;
-using Silicon.ViewModels.CoursesViewModels;
 
 namespace Silicon.Controllers;
 
 [Authorize]
-public class AccountController(SignInManager<UserEntity> signInManager, UserManager<UserEntity> userManager, AccountFactory accountFactory, UserFactory userFactory, UserService userService, AddressService addressService, CourseService courseService, SavedCoursesService savedCoursesService) : Controller
+public class AccountController(SignInManager<UserEntity> signInManager, UserManager<UserEntity> userManager, AccountFactory accountFactory, UserService userService, AddressService addressService, CourseService courseService, SavedCoursesService savedCoursesService, AccountService accountService) : Controller
 {
     private readonly SignInManager<UserEntity> _signInManager = signInManager;
     private readonly UserManager<UserEntity> _userManager = userManager;
     private readonly UserService _userService = userService;
     private readonly AddressService _addressService = addressService;
     private readonly AccountFactory _accountFactory = accountFactory;
-    private readonly UserFactory _userFactory = userFactory;
     private readonly CourseService _courseService = courseService;
     private readonly SavedCoursesService _savedCoursesService = savedCoursesService;
+    private readonly AccountService _accountService = accountService;
 
     #region Account
     [Route("/account")]
@@ -45,6 +44,16 @@ public class AccountController(SignInManager<UserEntity> signInManager, UserMana
         }
 
         return View(viewModel);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> UploadImage(IFormFile file)
+    {
+        var userEntity = await _userManager.GetUserAsync(User);
+        if (userEntity != null)
+            await _accountService.UploadProfileImageAsync(userEntity!, file);
+        string returnUrl = Request.Headers["Referer"].ToString();
+        return Redirect(returnUrl);
     }
 
     [HttpPost]

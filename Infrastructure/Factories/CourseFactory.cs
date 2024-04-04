@@ -1,5 +1,4 @@
 ﻿using Infrastructure.Entities;
-using Infrastructure.Models.AccountModels;
 using Infrastructure.Models.CourseModels;
 
 namespace Infrastructure.Factories;

@@ -189,3 +189,24 @@
         color: var(--color-white);
     }
 }
+
+.btn-circle {
+    display: flex;
+    background-color: var(--color-gray-100);
+    color: var(--color-gray-700);
+    justify-content: center;
+    align-items: center;
+    border-radius: 100%;
+    width: 1.5rem;
+    height: 1.5rem;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+
+    &:hover {
+        cursor: pointer;
+        text-decoration: none;
+        background: var(--color-gray-900);
+        color: var(--color-gray-200);
+    }
+}

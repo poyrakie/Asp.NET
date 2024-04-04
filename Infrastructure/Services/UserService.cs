@@ -31,7 +31,11 @@ public class UserService(UserRepository repo, UserManager<UserEntity> userManage
                     var userEntity = (UserEntity)factoryResult.ContentResult!;
                     if (IsTeacher(userEntity.FirstName))
                     {
-                        userEntity.ImgUrl = "/images/bosscat.jpg";
+                        userEntity.ImgUrl = "bosscat.jpg";
+                    }
+                    else
+                    {
+                        userEntity.ImgUrl = "cat.jpg";
                     }
                     var userManagerResult = await _userManager.CreateAsync(userEntity, form.Password);
                     if (userManagerResult.Succeeded)
@@ -55,7 +59,6 @@ public class UserService(UserRepository repo, UserManager<UserEntity> userManage
         {
             var result = await _repo.ExistsAsync(x => x.Email == email);
             return result;
-
         }
         catch (Exception ex)
         {

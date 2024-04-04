@@ -1,20 +1,12 @@
 ﻿using Infrastructure.Entities;
-using Infrastructure.Models;
 using Infrastructure.Models.AccountModels;
 using Infrastructure.Repositories;
-using Infrastructure.Services;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore.Migrations.Operations;
 
 namespace Infrastructure.Factories;
 
-public class AccountFactory(UserFactory userFactory, UserManager<UserEntity> userManager, AddressService addressService, AddressRepository addressRepository, UserRepository userRepository)
+public class AccountFactory(AddressRepository addressRepository)
 {
-    private readonly UserFactory _userFactory = userFactory;
-    private readonly UserManager<UserEntity> _userManager = userManager;
-    private readonly AddressService _addressService = addressService;
     private readonly AddressRepository _addressRepository = addressRepository;
-    private readonly UserRepository _userRepository = userRepository;
 
     public AccountDetailsBasicInfoModel PopulateBasicInfo(UserEntity user)
     {

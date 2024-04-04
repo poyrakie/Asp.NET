@@ -1,18 +1,38 @@
 ﻿using Infrastructure.Entities;
 using Infrastructure.Factories;
 using Infrastructure.Models;
-using Infrastructure.Models.AccountModels;
-using Infrastructure.Repositories;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 namespace Infrastructure.Services;
 
-public class AccountService(SignInManager<UserEntity> signInManager, UserManager<UserEntity> userManager, UserRepository userRepository, AccountFactory accountFactory)
+public class AccountService(UserManager<UserEntity> userManager, IConfiguration configuration)
 {
-    private readonly SignInManager<UserEntity> _signInManager = signInManager;
     private readonly UserManager<UserEntity> _userManager = userManager;
-    private readonly UserRepository _userRepository = userRepository;
-    private readonly AccountFactory _accountFactory = accountFactory;
+    private readonly IConfiguration _configuration = configuration;
 
+    public async Task<ResponseResult> UploadProfileImageAsync(UserEntity user, IFormFile file)
+    {
+        try
+        {
+            if (file != null && file.Length != 0)
+            {
+                var fileName = $"p_{Guid.NewGuid()}{Path.GetExtension(file.FileName)}";
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), _configuration["FileUploadPath"]!, fileName);
 
+                using var fs = new FileStream(filePath, FileMode.Create);
+                await file.CopyToAsync(fs);
+
+                user.ImgUrl = fileName;
+                var result = await _userManager.UpdateAsync(user);
+                if (result.Succeeded)
+                {
+                    return ResponseFactory.Ok();
+                }
+            }
+            return ResponseFactory.Error();
+        }
+        catch (Exception ex) { return ResponseFactory.Error(ex.Message); }
+    }
 
 }

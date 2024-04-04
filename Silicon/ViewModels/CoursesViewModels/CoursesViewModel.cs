@@ -1,6 +1,5 @@
 ﻿using Infrastructure.Entities;
 using Infrastructure.Models;
-using Infrastructure.Models.AuthModels;
 
 namespace Silicon.ViewModels.CoursesViewModels;
 

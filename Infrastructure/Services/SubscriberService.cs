@@ -1,5 +1,4 @@
-﻿
-using Infrastructure.Factories;
+﻿using Infrastructure.Factories;
 using Infrastructure.Models;
 using Infrastructure.Models.HomeModels;
 using Infrastructure.Repositories;

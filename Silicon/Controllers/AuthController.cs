@@ -1,19 +1,15 @@
 ﻿using Infrastructure.Entities;
-using Infrastructure.Factories;
 using Infrastructure.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Silicon.ViewModels.AuthViewModels;
-using System.Security.Claims;
 
 namespace Silicon.Controllers;
 
-public class AuthController(UserService userService, SignInManager<UserEntity> signInManager, UserManager<UserEntity> userManager, UserFactory userFactory) : Controller
+public class AuthController(UserService userService, SignInManager<UserEntity> signInManager) : Controller
 {
     private readonly UserService _userService = userService;
     private readonly SignInManager<UserEntity> _signInManager = signInManager;
-    private readonly UserManager<UserEntity> _userManager = userManager;
-    private readonly UserFactory _userFactory = userFactory;
 
     #region Signup
     [Route("/signup")]

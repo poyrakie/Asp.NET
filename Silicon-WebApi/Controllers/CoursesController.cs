@@ -1,13 +1,10 @@
 ﻿using Infrastructure.Entities;
-using Infrastructure.Filters;
 using Infrastructure.Models.CourseModels;
 using Infrastructure.Repositories;
 using Infrastructure.Services;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Silicon_WebApi.Filters;
-using System.Web.Helpers;
 
 namespace Silicon_WebApi.Controllers;
 

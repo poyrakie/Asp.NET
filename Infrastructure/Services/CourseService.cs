@@ -4,8 +4,6 @@ using Infrastructure.Factories;
 using Infrastructure.Models;
 using Infrastructure.Models.CourseModels;
 using Infrastructure.Repositories;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System.Text;

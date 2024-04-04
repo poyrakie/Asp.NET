@@ -1,7 +1,4 @@
-﻿using Infrastructure.Filters;
-using System.ComponentModel.DataAnnotations;
-
-namespace Infrastructure.Models.CourseModels;
+﻿namespace Infrastructure.Models.CourseModels;
 
 public class CourseModel
 {

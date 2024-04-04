@@ -6,10 +6,7 @@ using Infrastructure.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Storage.Json;
-using Newtonsoft.Json;
 using Silicon.ViewModels.CoursesViewModels;
-using System.ComponentModel;
 
 namespace Silicon.Controllers;
 
@@ -21,13 +18,6 @@ public class CoursesController(UserManager<UserEntity> userManager, SavedCourses
     private readonly CategoryRepository _categoryRepository = categoryRepository;
     private readonly CourseService _courseService = courseService;
 
-    //[HttpGet]
-    //[Route("/courses")]
-    //public IActionResult Index()
-    //{
-    //    ViewData["Title"] = "Courses";
-    //    return View();
-    //}
 
     [HttpGet]
     [Route("/courses")]

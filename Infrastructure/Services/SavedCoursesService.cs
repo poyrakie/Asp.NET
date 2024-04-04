@@ -2,9 +2,6 @@
 using Infrastructure.Factories;
 using Infrastructure.Models;
 using Infrastructure.Repositories;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using System.Linq.Expressions;
 
 namespace Infrastructure.Services;

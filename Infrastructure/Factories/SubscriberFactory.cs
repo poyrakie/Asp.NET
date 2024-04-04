@@ -1,5 +1,4 @@
 ﻿using Infrastructure.Entities;
-using Infrastructure.Models;
 using Infrastructure.Models.HomeModels;
 
 namespace Infrastructure.Factories;

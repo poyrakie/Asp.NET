@@ -1,7 +1,5 @@
 ﻿using Infrastructure.Models;
-using Infrastructure.Repositories;
 using Infrastructure.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Silicon_WebApi.Filters;
 

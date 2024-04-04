@@ -10,7 +10,7 @@ public class UserEntity : IdentityUser
     public string LastName { get; set; } = null!;
     public int? AddressId { get; set; }
     public string? Biography { get; set; }
-    public string? ImgUrl { get; set; }
+    public string? ImgUrl { get; set; } = "cat.jpg";
     public AddressEntity? Address { get; set; }
     public bool IsExternalAccount { get; set; } = false;
 }

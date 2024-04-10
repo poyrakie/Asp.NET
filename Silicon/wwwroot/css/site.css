@@ -513,8 +513,8 @@ header {
 header .container {
   display: grid;
   align-items: center;
-  grid-template-columns: 1fr auto;
-  grid-template-areas: "logo mobile";
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-areas: "logo switch buttons";
   gap: 40px;
 }
 @media (min-width: 992px) {
@@ -541,7 +541,6 @@ header .container #menu nav {
 }
 header .container .btn-switch {
   grid-area: switch;
-  display: none;
 }
 @media (min-width: 992px) {
   header .container .btn-switch {
@@ -550,8 +549,15 @@ header .container .btn-switch {
 }
 header .container .account-buttons {
   grid-area: buttons;
-  display: none;
   gap: 15px;
+}
+header .container .account-buttons a {
+  font-size: 10px;
+}
+@media (min-width: 768px) {
+  header .container .account-buttons a {
+    font-size: 14px;
+  }
 }
 header .container .account-buttons a img {
   border-radius: 100%;
@@ -565,7 +571,7 @@ header .container .account-buttons a img {
 }
 header .container .btn-mobile {
   grid-area: mobile;
-  display: block;
+  display: none;
 }
 @media (min-width: 992px) {
   header .container .btn-mobile {
